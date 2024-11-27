@@ -17,7 +17,7 @@ internal class FunctionCaller
         builder.AddAzureOpenAIChatCompletion(
             deploymentName: "gpt-4o",
             endpoint: "https://gbb-open-ai.openai.azure.com/",
-            apiKey: "Ex5asRs0zorNv4iJjK5a4mBN2HyEltVMO0UaD4s0QhU2cV1b0QAaJQQJ99AKACYeBjFXJ3w3AAABACOGbEcZ");
+            apiKey: "");
         builder.Plugins.AddFromObject(new RoleService())
                        .AddFromObject(new UserService())
                        .AddFromObject(new UserRoleService());
