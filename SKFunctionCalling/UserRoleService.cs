@@ -1,6 +1,7 @@
 ﻿using Microsoft.SemanticKernel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +78,8 @@ public class UserRoleService
     }
 
     [KernelFunction]
-    public void RemoveUserFromRole(string username, string roleName)
+    public void RemoveUserFromRole(string username, 
+        [Description("Before adding, verify from the list of valid roles first.")] string roleName)
     {
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
