@@ -1,7 +1,7 @@
 ﻿namespace SKFunctionCalling;
 
-using Microsoft.SemanticKernel;
 using static DbHelper;
+using static RoleService;
 using static Console;
 
 public class Program
@@ -10,13 +10,24 @@ public class Program
     {
         CreateDbIfNotExist();
         TruncateTables();
+        AddRole("Admin");
+        AddRole("Investigator");
+        AddRole("Auditor");
+        AddRole("Audit Manager");
+        AddRole("Dev");
+        AddRole("Tester");
 
-        ResetColor();
+        ForegroundColor = ConsoleColor.White;
 
         WriteLine(@"
-You may start by asking what the app can do. 
+------------------------------------------------------------------------------------------
+This is a simple implementation of Function Calling in Semantic Kernel using ChatGPT.
+Function Calling allows you to call functions in your applications using natural language.
+You may start by introducing youself or asking questions like ""What can you do for me?"" 
+or ""Show me some commands,""
 
 Press enter to exit the chat.
+------------------------------------------------------------------------------------------
 ");
 
         string prompt = "";
@@ -26,18 +37,18 @@ Press enter to exit the chat.
         var functionCaller = new FunctionCaller();
         while (true)
         {
-            ResetColor();
+            ForegroundColor = ConsoleColor.White;
             Write("You > ");
 
             prompt = ReadLine();
             if (string.IsNullOrWhiteSpace(prompt))
                 break;
-            ForegroundColor = ConsoleColor.Green;
+            ForegroundColor = ConsoleColor.DarkYellow;
 
             var response = await functionCaller.Run(prompt);                   
 
 
-            ForegroundColor = ConsoleColor.Blue;
+            ForegroundColor = ConsoleColor.Green;
             WriteLine($"Bot > {response}");
         }
     }

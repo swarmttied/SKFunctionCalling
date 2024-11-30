@@ -1,6 +1,7 @@
 ﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Azure.Identity;
 
 
 namespace SKFunctionCalling;
@@ -17,14 +18,22 @@ internal class FunctionCaller
         builder.AddAzureOpenAIChatCompletion(
             deploymentName: "gpt-4o",
             endpoint: "https://gbb-open-ai.openai.azure.com/",
-            apiKey: "");
-        builder.Plugins.AddFromObject(new RoleService())
-                       .AddFromObject(new UserService())
-                       .AddFromObject(new UserRoleService());
+            credentials: new DefaultAzureCredential());
+
+        // Use this if you prefer API key
+        //builder.AddAzureOpenAIChatCompletion(
+        //   deploymentName: "gpt-4o",
+        //   endpoint: "https://gbb-open-ai.openai.azure.com/",
+        //   apiKey: "<your key here>");
+
+        builder.Plugins.AddFromType<RoleService>()
+                       .AddFromType<UserService>()
+                       .AddFromType<UserRoleService>();
 
         _sk = builder.Build();
 
-        var instructions = @"You are Ana the Role Membership Agent in our team. You assist us with our requests on access and permissions";
+        var instructions = @"Your name is Sissy the Role Membership Agent in our team. You assist us with our requests on access and permissions.
+You are going to introduce yourself before executing the first command. If there are commands you cannot do, please let the user know.";
         _chatHistory = new ChatHistory(instructions);
 
         _openAIPromptExecutionSettings = new()
@@ -46,7 +55,7 @@ internal class FunctionCaller
 
         string fullMessage = "";
         await foreach (var msg in messageContents)
-        {
+        {            
             Console.Write(msg.Content);
             fullMessage += msg.Content;
         }

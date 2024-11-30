@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace SKFunctionCalling;
 public class Role
@@ -13,10 +14,8 @@ public class Role
 }
 public class RoleService
 {
-    [KernelFunction]
-    public void AddRole(string role)
+    public static void AddRole(string role)
     {
-        Console.WriteLine($"Function called: AddRole(roleName:\"{role}\")");
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"
@@ -30,6 +29,8 @@ public class RoleService
     [KernelFunction]
     public List<Role> ListRoles()
     {
+        WriteLine("Function: ListRoles");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"

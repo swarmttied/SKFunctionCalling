@@ -21,6 +21,7 @@ public static class DbHelper
                 CREATE TABLE IF NOT EXISTS UserRoles (
                     Username TEXT NOT NULL,
                     Rolename TEXT NOT NULL,
+                    PRIMARY KEY(Username, Rolename),
                     FOREIGN KEY(Username) REFERENCES Users(Username),
                     FOREIGN KEY(Rolename) REFERENCES Roles(Rolename)
                 );

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace SKFunctionCalling;
 
@@ -17,8 +18,10 @@ public class UserRole
 public class UserRoleService
 {
     [KernelFunction]
-    public List<UserRole> ListUserRoles()
+    public List<UserRole> ListUsersRoles()
     {
+        WriteLine("Function: ListUsersRoles");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"
@@ -40,6 +43,8 @@ public class UserRoleService
     [KernelFunction]
     public List<User> GetUsersInRole(string roleName)
     {
+        WriteLine($"Function: GetUsersInRole");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"
@@ -64,8 +69,14 @@ public class UserRoleService
     }
 
     [KernelFunction]
-    public void AddUserToRole(string username, string roleName)
+    public void AddUserToRole(
+        [Description("Check first if the user is in the system.")] 
+        string username,
+        [Description("Abort if this the role is not in the system. No need to check if the user is not in the system.")]
+        string roleName)
     {
+        WriteLine($"Function: AddUserToRole");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"
@@ -78,9 +89,10 @@ public class UserRoleService
     }
 
     [KernelFunction]
-    public void RemoveUserFromRole(string username, 
-        [Description("Before adding, verify from the list of valid roles first.")] string roleName)
+    public void RemoveUserFromRole(string username, string roleName)
     {
+        WriteLine($"Function: RemoveUserFromRole");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"

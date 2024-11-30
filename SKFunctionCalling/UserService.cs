@@ -1,9 +1,11 @@
 ﻿using Microsoft.SemanticKernel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
 namespace SKFunctionCalling;
 
@@ -19,6 +21,8 @@ public class UserService
     [KernelFunction]
     public List<User> ListUsers()
     {
+        WriteLine("Function: ListUsers");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"
@@ -39,23 +43,28 @@ public class UserService
     }
 
     [KernelFunction]
-    public void AddUser(User newUser)
+    public void AddUser(User user)
     {
+        WriteLine($"Function: AddUser");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = @"
                 INSERT INTO Users (Username, Fullname, Email)
                 VALUES (@Username, @Fullname, @Email)
             ";
-        command.Parameters.Add(DbHelper.CreateParam(command, "@Username", newUser.Username));
-        command.Parameters.Add(DbHelper.CreateParam(command, "@Fullname", newUser.Fullname));
-        command.Parameters.Add(DbHelper.CreateParam(command, "@Email", newUser.Email));
+        command.Parameters.Add(DbHelper.CreateParam(command, "@Username", user.Username));
+        command.Parameters.Add(DbHelper.CreateParam(command, "@Fullname", user.Fullname));
+        command.Parameters.Add(DbHelper.CreateParam(command, "@Email", user.Email));
         command.ExecuteNonQuery();
     }
 
     [KernelFunction]
-    public User GetUserByUsername(string username)
+    [Description("Checks if the user is in the system")]
+    public User GetUser(string username)
     {
+        WriteLine($"Function: GetUser");
+
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
         command.CommandText = "SELECT * FROM Users WHERE Username = @Username";
@@ -65,11 +74,12 @@ public class UserService
         {
             return new User
             {
-                Username = reader.GetString(9),
+                Username = reader.GetString(0),
                 Fullname = reader.GetString(1),
                 Email = reader.GetString(2)
             };
         }
+
         return null;
     }
 }
