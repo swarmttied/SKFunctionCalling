@@ -33,7 +33,10 @@ internal class FunctionCaller
         _sk = builder.Build();
 
         var instructions = @"Your name is Sissy the Role Membership Agent in our team. You assist us with our requests on access and permissions.
-You are going to introduce yourself before executing the first command. If there are commands you cannot do, please let the user know.";
+You are going to introduce yourself before executing the first command. If there are commands you cannot do, please let the user know.
+
+If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
+";
         _chatHistory = new ChatHistory(instructions);
 
         _openAIPromptExecutionSettings = new()
@@ -47,21 +50,21 @@ You are going to introduce yourself before executing the first command. If there
     public async Task<string> Run(string prompt)
     {
         _chatHistory.AddUserMessage(prompt);
-        var messageContents = _chatService.GetStreamingChatMessageContentsAsync(
+        var messageContents = await _chatService.GetChatMessageContentsAsync(
             _chatHistory,
             _openAIPromptExecutionSettings,
             kernel:_sk
-            );
+            ); 
 
         string fullMessage = "";
-        await foreach (var msg in messageContents)
+        foreach (var msg in messageContents)
         {            
             Console.Write(msg.Content);
             fullMessage += msg.Content;
         }
 
         Console.WriteLine();
-
+        _chatHistory.AddAssistantMessage(fullMessage);
         return fullMessage;
     }
 }
