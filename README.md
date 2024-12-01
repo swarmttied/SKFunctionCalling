@@ -1,2 +1,2 @@
-# Semantic Kernel Function Calling
-Sema
+# Better UI with AI
+
