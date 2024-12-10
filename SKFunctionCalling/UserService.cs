@@ -60,6 +60,19 @@ public class UserService
     }
 
     [KernelFunction]
+    public void RemoveUser(string username)
+    {
+        WriteLine($"Function: RemoveUser");
+
+        using var connection = DbHelper.GetDbConnection();
+        var command = connection.CreateCommand();
+        command.CommandText = "DELETE FROM Users WHERE Username = @Username";
+        command.Parameters.Add(DbHelper.CreateParam(command, "@Username", username));
+        command.ExecuteNonQuery();
+    }
+
+
+    [KernelFunction]
     [Description("Checks if the user is in the system")]
     public User GetUser(string username)
     {

@@ -33,7 +33,7 @@ internal class FunctionCaller
         _sk = builder.Build();
 
         var instructions = @"Your name is Sissy the Role Membership Agent in our team. You assist us with our requests on access and permissions.
-You are going to introduce yourself before executing the first command. If there are commands you cannot do, please let the user know.
+You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
 
 If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
 ";
