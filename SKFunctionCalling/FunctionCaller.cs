@@ -32,7 +32,7 @@ internal class FunctionCaller
 
         _sk = builder.Build();
 
-        var instructions = @"Your are the Role Membership Agent in our team. You assist us with our requests on access and permissions.
+        var instructions = @"You are the Role Membership Agent. You assist with user user access needs.
 You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
 
 If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
@@ -65,7 +65,7 @@ If no function in this application is called, tell the user the request is beyon
             {
                 if (ex.Message.Contains("exceeded"))
                 {
-                    Console.WriteLine("Rate limist exceeded. Retrying after 30 seconds");
+                    Console.WriteLine("Rate limit exceeded. Retrying after 30 seconds.");
                     Thread.Sleep(TimeSpan.FromSeconds(30));
                 }
                 else

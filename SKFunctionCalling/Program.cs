@@ -24,16 +24,13 @@ public class Program
 This is a simple implementation of Function Calling in Semantic Kernel using ChatGPT.
 Function Calling allows you to call functions in your applications using natural language.
 You may start by introducing youself or asking questions like ""What can you do for me?"" 
-or ""Show me some commands,""
+or ""Show me some commands""
 
 Press enter to exit the chat.
 ------------------------------------------------------------------------------------------
 ");
 
         string prompt = "";
-
-        WriteLine();
-
         var functionCaller = new FunctionCaller();
         while (true)
         {
