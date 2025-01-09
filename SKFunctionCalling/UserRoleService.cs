@@ -70,9 +70,7 @@ public class UserRoleService
 
     [KernelFunction]
     public void AddUserToRole(
-        [Description("Check first if the user is in the system.")] 
         string username,
-        [Description("Abort if this the role is not in the system. No need to check if the user is not in the system.")]
         string roleName)
     {
         WriteLine($"Function: AddUserToRole");

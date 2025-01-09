@@ -61,12 +61,16 @@ If no function in this application is called, tell the user the request is beyon
                     kernel: _sk);
                 success = true;
             }
-            catch (Exception ex)
+            catch (Exception ex)            
             {
                 if (ex.Message.Contains("exceeded"))
                 {
                     Console.WriteLine("Rate limit exceeded. Retrying after 30 seconds.");
                     Thread.Sleep(TimeSpan.FromSeconds(30));
+                }
+                else if (ex.Message.Contains("content_filter"))
+                {
+                    return "The response was filtered due to the prompt triggering Azure OpenAI's content management policy. Please modify your prompt and retry.";
                 }
                 else
                 {
