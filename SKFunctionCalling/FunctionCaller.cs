@@ -50,20 +50,40 @@ If no function in this application is called, tell the user the request is beyon
     public async Task<string> Run(string prompt)
     {
         _chatHistory.AddUserMessage(prompt);
-        var messageContents = await _chatService.GetChatMessageContentsAsync(
-            _chatHistory,
-            _openAIPromptExecutionSettings,
-            kernel:_sk
-            ); 
+        bool success = false;
+        IReadOnlyList<ChatMessageContent> messageContents = null;
+        do
+        {  try
+            {
+                messageContents = await _chatService.GetChatMessageContentsAsync(
+                    _chatHistory,
+                    _openAIPromptExecutionSettings,
+                    kernel: _sk);
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("exceeded"))
+                {
+                    Console.WriteLine("Rate limist exceeded. Retrying after 30 seconds");
+                    Thread.Sleep(TimeSpan.FromSeconds(30));
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+        while (!success);
+
 
         string fullMessage = "";
         foreach (var msg in messageContents)
         {            
-            Console.Write(msg.Content);
+            //Console.Write(msg.Content);
             fullMessage += msg.Content;
         }
 
-        Console.WriteLine();
         _chatHistory.AddAssistantMessage(fullMessage);
         return fullMessage;
     }
