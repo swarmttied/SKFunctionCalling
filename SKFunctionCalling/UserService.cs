@@ -14,6 +14,11 @@ public class User
     public string Username { get; set; }
     public string Fullname { get; set; }
     public string Email { get; set; }
+
+    override public string ToString()
+    {
+        return $"{Username} - {Fullname} - {Email}";
+    }
 }
 
 public class UserService
