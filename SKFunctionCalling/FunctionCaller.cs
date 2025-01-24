@@ -12,19 +12,19 @@ internal class FunctionCaller
     readonly IChatCompletionService _chatService;
     readonly OpenAIPromptExecutionSettings _openAIPromptExecutionSettings;
     readonly Kernel _sk;
-    public FunctionCaller()
+    public FunctionCaller(string AIendpoint, string AIdeployment)
     {
         var builder = Kernel.CreateBuilder();
         builder.AddAzureOpenAIChatCompletion(
-            deploymentName: "gpt-4o",
-            endpoint: "https://gbb-open-ai.openai.azure.com/",
+            deploymentName: AIdeployment,
+            endpoint: AIendpoint,
             credentials: new DefaultAzureCredential());
 
-        // Use this if you prefer API key
+        // Use this if you prefer API key (not recommended)
         //builder.AddAzureOpenAIChatCompletion(
-        //   deploymentName: "gpt-4o",
-        //   endpoint: "https://gbb-open-ai.openai.azure.com/",
-        //   apiKey: "<your key here>");
+        //   deploymentName: AIdeployment,
+        //   endpoint: AIendpoint,
+        //   apiKey: "key here");
 
         builder.Plugins.AddFromType<RoleService>()
                        .AddFromType<UserService>()

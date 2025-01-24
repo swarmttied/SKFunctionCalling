@@ -3,6 +3,7 @@
 using static DbHelper;
 using static RoleService;
 using static Console;
+using Microsoft.Extensions.Configuration;
 
 public class Program
 {
@@ -21,28 +22,40 @@ public class Program
 
         WriteLine(@"
 ------------------------------------------------------------------------------------------
-This is a simple implementation of Function Calling in Semantic Kernel using ChatGPT.
-Function Calling allows you to call functions in your applications using natural language.
+This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
+Function Calling allows you to call function in your applications using natural language.
 You may start by introducing youself or asking questions like ""What can you do for me?"" 
 or ""Show me some commands""
 
-Press enter to exit the chat.
+Type ""exit"" to exit the app.
 ------------------------------------------------------------------------------------------
-");
+    ");
 
-        string prompt = "";
-        var functionCaller = new FunctionCaller();
+       
+
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+        string endpoint = configuration["endpoint"];
+        string deployment = configuration["deployment"];
+        var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment);
         while (true)
         {
             ForegroundColor = ConsoleColor.White;
             Write("You > ");
 
-            prompt = ReadLine();
+            string prompt = ReadLine();
             if (string.IsNullOrWhiteSpace(prompt))
+                continue;
+
+
+            if (prompt.Contains("exit"))
                 break;
+
             ForegroundColor = ConsoleColor.DarkYellow;
 
-            var response = await functionCaller.Run(prompt);                   
+            var response = await functionCaller.Run(prompt);
 
 
             ForegroundColor = ConsoleColor.Green;
