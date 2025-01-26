@@ -18,7 +18,7 @@ internal class FunctionCaller
         builder.AddAzureOpenAIChatCompletion(
             deploymentName: AIdeployment,
             endpoint: AIendpoint,
-            credentials: new InteractiveBrowserCredential());
+            credentials: new DefaultAzureCredential());
 
         // Use this if you prefer API key (not recommended)
         //builder.AddAzureOpenAIChatCompletion(
