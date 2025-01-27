@@ -18,9 +18,9 @@ namespace SKFunctionCallingWinform
         {
             userService.AddUser(new User
             {
-                Username = textBox1.Text,
-                Fullname = textBox2.Text,
-                Email = textBox3.Text,
+                Username = fullnameTextBox.Text,
+                Fullname = aliasTextBox.Text,
+                Email = emailTextBox.Text,
             });
             RefreshList();
         }
@@ -28,18 +28,19 @@ namespace SKFunctionCallingWinform
         private void RefreshList()
         {
             var users = userService.ListUsers();
-            listBox1.DataSource = users;
+            usersListBox.DataSource = users;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             CreateDbIfNotExist();
-            //AddRole("Admin");
-            //AddRole("Investigator");
-            //AddRole("Auditor");
-            //AddRole("Audit Manager");
-            //AddRole("Dev");
-            //AddRole("Tester");
+            TruncateTables();
+            AddRole("Admin");
+            AddRole("Investigator");
+            AddRole("Auditor");
+            AddRole("Audit Manager");
+            AddRole("Dev");
+            AddRole("Tester");
 
             PopulateRolesListBox();
         }
