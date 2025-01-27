@@ -111,14 +111,31 @@ namespace SKFunctionCallingWinform
             try
             {
                 var selectedUser = (User)usersListBox.SelectedItem;
-            
+
                 userService.RemoveUser(selectedUser.Username);
                 RefreshList();
-             
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error removing user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void remnoveUserRoleButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var username = userRoleUsernameTextBox.Text;
+                var roleName = roleCombo.Text;
+
+                new UserRoleService().RemoveUserFromRole(username, roleName);
+
+                MessageBox.Show("User removed from role successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error removing user from role: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
