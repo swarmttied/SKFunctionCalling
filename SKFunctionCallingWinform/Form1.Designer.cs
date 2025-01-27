@@ -34,7 +34,7 @@
             listUsersButton = new Button();
             usersInRoleListBox = new ListBox();
             roleCombo = new ComboBox();
-            button3 = new Button();
+            remnoveUserRoleButton = new Button();
             addUserRoleButton = new Button();
             label6 = new Label();
             label5 = new Label();
@@ -71,7 +71,7 @@
             tabPage1.Controls.Add(listUsersButton);
             tabPage1.Controls.Add(usersInRoleListBox);
             tabPage1.Controls.Add(roleCombo);
-            tabPage1.Controls.Add(button3);
+            tabPage1.Controls.Add(remnoveUserRoleButton);
             tabPage1.Controls.Add(addUserRoleButton);
             tabPage1.Controls.Add(label6);
             tabPage1.Controls.Add(label5);
@@ -133,14 +133,15 @@
             roleCombo.TabIndex = 19;
             roleCombo.SelectedIndexChanged += roleCombo_SelectedIndexChanged;
             // 
-            // button3
+            // remnoveUserRoleButton
             // 
-            button3.Location = new Point(774, 229);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 23);
-            button3.TabIndex = 18;
-            button3.Text = "Remove";
-            button3.UseVisualStyleBackColor = true;
+            remnoveUserRoleButton.Location = new Point(774, 229);
+            remnoveUserRoleButton.Name = "remnoveUserRoleButton";
+            remnoveUserRoleButton.Size = new Size(75, 23);
+            remnoveUserRoleButton.TabIndex = 18;
+            remnoveUserRoleButton.Text = "Remove";
+            remnoveUserRoleButton.UseVisualStyleBackColor = true;
+            remnoveUserRoleButton.Click += remnoveUserRoleButton_Click;
             // 
             // addUserRoleButton
             // 
@@ -315,7 +316,7 @@
         private TextBox userRoleUsernameTextBox;
         private ListBox usersInRoleListBox;
         private ComboBox roleCombo;
-        private Button button3;
+        private Button remnoveUserRoleButton;
         private Button listUsersButton;
         private Button getUserButton;
         private Button addUserRoleButton;
