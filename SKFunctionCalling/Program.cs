@@ -9,6 +9,13 @@ public class Program
 {
     public static async Task Main()
     {
+        var configuration = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+           .Build();
+        string endpoint = configuration["endpoint"];
+        string deployment = configuration["deployment"];
+
         CreateDbIfNotExist();
         TruncateTables();
         AddRole("Admin");
@@ -20,7 +27,7 @@ public class Program
 
         ForegroundColor = ConsoleColor.White;
 
-        WriteLine(@"
+        WriteLine($@"
 ------------------------------------------------------------------------------------------
 This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
 Function Calling allows you to call function in your applications using natural language.
@@ -28,17 +35,15 @@ You may start by introducing youself or asking questions like ""What can you do 
 or ""Show me some commands""
 
 Type ""exit"" to exit the app.
+
+Endpoint: {endpoint} 
+   Model: {deployment}
 ------------------------------------------------------------------------------------------
     ");
 
        
 
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .Build();
-        string endpoint = configuration["endpoint"];
-        string deployment = configuration["deployment"];
+       
         var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment);
         while (true)
         {
