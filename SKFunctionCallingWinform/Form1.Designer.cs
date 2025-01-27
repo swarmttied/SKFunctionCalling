@@ -30,26 +30,27 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            getUserButton = new Button();
+            listUsersButton = new Button();
+            usersInRoleListBox = new ListBox();
+            roleCombo = new ComboBox();
+            button3 = new Button();
+            addUserRoleButton = new Button();
+            label6 = new Label();
+            label5 = new Label();
+            userRoleUsernameTextBox = new TextBox();
+            userRoleRoleTextBox = new TextBox();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
             listBoxRoles = new ListBox();
             usersListBox = new ListBox();
             emailTextBox = new TextBox();
-            aliasTextBox = new TextBox();
+            usernameTextBox = new TextBox();
             fullnameTextBox = new TextBox();
-            button2 = new Button();
-            button1 = new Button();
+            removeUsersButton = new Button();
+            addUsersButton = new Button();
             tabPage2 = new TabPage();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            label5 = new Label();
-            label6 = new Label();
-            button3 = new Button();
-            button5 = new Button();
-            comboBox1 = new ComboBox();
-            listBox1 = new ListBox();
-            button4 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             SuspendLayout();
@@ -66,25 +67,26 @@
             // 
             // tabPage1
             // 
-            tabPage1.Controls.Add(button4);
-            tabPage1.Controls.Add(listBox1);
-            tabPage1.Controls.Add(comboBox1);
+            tabPage1.Controls.Add(getUserButton);
+            tabPage1.Controls.Add(listUsersButton);
+            tabPage1.Controls.Add(usersInRoleListBox);
+            tabPage1.Controls.Add(roleCombo);
             tabPage1.Controls.Add(button3);
-            tabPage1.Controls.Add(button5);
+            tabPage1.Controls.Add(addUserRoleButton);
             tabPage1.Controls.Add(label6);
             tabPage1.Controls.Add(label5);
-            tabPage1.Controls.Add(textBox2);
-            tabPage1.Controls.Add(textBox1);
+            tabPage1.Controls.Add(userRoleUsernameTextBox);
+            tabPage1.Controls.Add(userRoleRoleTextBox);
             tabPage1.Controls.Add(label3);
             tabPage1.Controls.Add(label2);
             tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(listBoxRoles);
             tabPage1.Controls.Add(usersListBox);
             tabPage1.Controls.Add(emailTextBox);
-            tabPage1.Controls.Add(aliasTextBox);
+            tabPage1.Controls.Add(usernameTextBox);
             tabPage1.Controls.Add(fullnameTextBox);
-            tabPage1.Controls.Add(button2);
-            tabPage1.Controls.Add(button1);
+            tabPage1.Controls.Add(removeUsersButton);
+            tabPage1.Controls.Add(addUsersButton);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
@@ -92,6 +94,122 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "tabPage1";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // getUserButton
+            // 
+            getUserButton.Location = new Point(17, 249);
+            getUserButton.Name = "getUserButton";
+            getUserButton.Size = new Size(75, 23);
+            getUserButton.TabIndex = 22;
+            getUserButton.Text = "Get User ";
+            getUserButton.UseVisualStyleBackColor = true;
+            getUserButton.Click += getUserButton_Click;
+            // 
+            // listUsersButton
+            // 
+            listUsersButton.Location = new Point(17, 34);
+            listUsersButton.Name = "listUsersButton";
+            listUsersButton.Size = new Size(75, 23);
+            listUsersButton.TabIndex = 21;
+            listUsersButton.Text = "List";
+            listUsersButton.UseVisualStyleBackColor = true;
+            listUsersButton.Click += listUsersButton_Click;
+            // 
+            // usersInRoleListBox
+            // 
+            usersInRoleListBox.FormattingEnabled = true;
+            usersInRoleListBox.ItemHeight = 15;
+            usersInRoleListBox.Location = new Point(694, 84);
+            usersInRoleListBox.Name = "usersInRoleListBox";
+            usersInRoleListBox.Size = new Size(155, 139);
+            usersInRoleListBox.TabIndex = 20;
+            // 
+            // roleCombo
+            // 
+            roleCombo.FormattingEnabled = true;
+            roleCombo.Location = new Point(694, 52);
+            roleCombo.Name = "roleCombo";
+            roleCombo.Size = new Size(155, 23);
+            roleCombo.TabIndex = 19;
+            roleCombo.SelectedIndexChanged += roleCombo_SelectedIndexChanged;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(774, 229);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 18;
+            button3.Text = "Remove";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // addUserRoleButton
+            // 
+            addUserRoleButton.Location = new Point(509, 113);
+            addUserRoleButton.Name = "addUserRoleButton";
+            addUserRoleButton.Size = new Size(75, 23);
+            addUserRoleButton.TabIndex = 17;
+            addUserRoleButton.Text = "Add";
+            addUserRoleButton.UseVisualStyleBackColor = true;
+            addUserRoleButton.Click += addUserRoleButton_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(473, 87);
+            label6.Name = "label6";
+            label6.Size = new Size(30, 15);
+            label6.TabIndex = 15;
+            label6.Text = "Role";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(443, 60);
+            label5.Name = "label5";
+            label5.Size = new Size(60, 15);
+            label5.TabIndex = 14;
+            label5.Text = "Username";
+            // 
+            // userRoleUsernameTextBox
+            // 
+            userRoleUsernameTextBox.Location = new Point(509, 52);
+            userRoleUsernameTextBox.Name = "userRoleUsernameTextBox";
+            userRoleUsernameTextBox.Size = new Size(156, 23);
+            userRoleUsernameTextBox.TabIndex = 13;
+            // 
+            // userRoleRoleTextBox
+            // 
+            userRoleRoleTextBox.Location = new Point(509, 84);
+            userRoleRoleTextBox.Name = "userRoleRoleTextBox";
+            userRoleRoleTextBox.Size = new Size(156, 23);
+            userRoleRoleTextBox.TabIndex = 12;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(206, 118);
+            label3.Name = "label3";
+            label3.Size = new Size(36, 15);
+            label3.TabIndex = 9;
+            label3.Text = "Email";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(184, 60);
+            label2.Name = "label2";
+            label2.Size = new Size(60, 15);
+            label2.TabIndex = 8;
+            label2.Text = "Username";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(188, 89);
+            label1.Name = "label1";
+            label1.Size = new Size(56, 15);
+            label1.TabIndex = 7;
+            label1.Text = "Fullname";
             // 
             // listBoxRoles
             // 
@@ -118,12 +236,12 @@
             emailTextBox.Size = new Size(155, 23);
             emailTextBox.TabIndex = 4;
             // 
-            // aliasTextBox
+            // usernameTextBox
             // 
-            aliasTextBox.Location = new Point(250, 57);
-            aliasTextBox.Name = "aliasTextBox";
-            aliasTextBox.Size = new Size(155, 23);
-            aliasTextBox.TabIndex = 3;
+            usernameTextBox.Location = new Point(250, 57);
+            usernameTextBox.Name = "usernameTextBox";
+            usernameTextBox.Size = new Size(155, 23);
+            usernameTextBox.TabIndex = 3;
             // 
             // fullnameTextBox
             // 
@@ -132,137 +250,35 @@
             fullnameTextBox.Size = new Size(155, 23);
             fullnameTextBox.TabIndex = 2;
             // 
-            // button2
+            // removeUsersButton
             // 
-            button2.Location = new Point(331, 144);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 1;
-            button2.Text = "Remove";
-            button2.UseVisualStyleBackColor = true;
+            removeUsersButton.Location = new Point(99, 249);
+            removeUsersButton.Name = "removeUsersButton";
+            removeUsersButton.Size = new Size(75, 23);
+            removeUsersButton.TabIndex = 1;
+            removeUsersButton.Text = "Remove";
+            removeUsersButton.UseVisualStyleBackColor = true;
+            removeUsersButton.Click += removeUsersButton_Click;
             // 
-            // button1
+            // addUsersButton
             // 
-            button1.Location = new Point(250, 144);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Text = "Add";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            addUsersButton.Location = new Point(250, 144);
+            addUsersButton.Name = "addUsersButton";
+            addUsersButton.Size = new Size(75, 23);
+            addUsersButton.TabIndex = 0;
+            addUsersButton.Text = "Add";
+            addUsersButton.UseVisualStyleBackColor = true;
+            addUsersButton.Click += addUsersButton_Click;
             // 
             // tabPage2
             // 
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(685, 340);
+            tabPage2.Size = new Size(1457, 635);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "tabPage2";
             tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(199, 89);
-            label1.Name = "label1";
-            label1.Size = new Size(39, 15);
-            label1.TabIndex = 7;
-            label1.Text = "Name";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(206, 60);
-            label2.Name = "label2";
-            label2.Size = new Size(32, 15);
-            label2.TabIndex = 8;
-            label2.Text = "Alias";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(206, 118);
-            label3.Name = "label3";
-            label3.Size = new Size(36, 15);
-            label3.TabIndex = 9;
-            label3.Text = "Email";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(507, 56);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(156, 23);
-            textBox1.TabIndex = 12;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(507, 24);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(156, 23);
-            textBox2.TabIndex = 13;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(469, 32);
-            label5.Name = "label5";
-            label5.Size = new Size(32, 15);
-            label5.TabIndex = 14;
-            label5.Text = "Alias";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(471, 59);
-            label6.Name = "label6";
-            label6.Size = new Size(30, 15);
-            label6.TabIndex = 15;
-            label6.Text = "Role";
-            // 
-            // button3
-            // 
-            button3.Location = new Point(588, 85);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 23);
-            button3.TabIndex = 18;
-            button3.Text = "Delete";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(507, 85);
-            button5.Name = "button5";
-            button5.Size = new Size(75, 23);
-            button5.TabIndex = 17;
-            button5.Text = "Add";
-            button5.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(726, 24);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 19;
-            // 
-            // listBox1
-            // 
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(692, 56);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(155, 139);
-            listBox1.TabIndex = 20;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(17, 34);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 21;
-            button4.Text = "List";
-            button4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -284,10 +300,10 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TextBox emailTextBox;
-        private TextBox aliasTextBox;
+        private TextBox usernameTextBox;
         private TextBox fullnameTextBox;
-        private Button button2;
-        private Button button1;
+        private Button removeUsersButton;
+        private Button addUsersButton;
         private TabPage tabPage2;
         private ListBox usersListBox;
         private ListBox listBoxRoles;
@@ -296,12 +312,13 @@
         private Label label1;
         private Label label6;
         private Label label5;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private ListBox listBox1;
-        private ComboBox comboBox1;
+        private TextBox userRoleUsernameTextBox;
+        private ListBox usersInRoleListBox;
+        private ComboBox roleCombo;
         private Button button3;
-        private Button button5;
-        private Button button4;
+        private Button listUsersButton;
+        private Button getUserButton;
+        private Button addUserRoleButton;
+        private TextBox userRoleRoleTextBox;
     }
 }
