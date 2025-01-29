@@ -42,6 +42,7 @@ namespace SKFunctionCallingWinform
                 usernameTextBox.Text = "";
                 fullnameTextBox.Text = "";
                 emailTextBox.Text = "";
+                RefreshUserList();
             }
             catch (Exception ex)
             {
@@ -49,7 +50,7 @@ namespace SKFunctionCallingWinform
             }
         }
 
-        private void RefreshList()
+        private void RefreshUserList()
         {
             var users = userService.ListUsers();
             usersListBox.DataSource = users;
@@ -69,7 +70,7 @@ namespace SKFunctionCallingWinform
 
         private void listUsersButton_Click(object sender, EventArgs e)
         {
-            RefreshList();
+            RefreshUserList();
         }
 
         private void getUserButton_Click(object sender, EventArgs e)
@@ -85,6 +86,11 @@ namespace SKFunctionCallingWinform
 
         private void roleCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RefreshUsersInRoleListBox();           
+        }
+
+        private void RefreshUsersInRoleListBox()
+        {
             var role = (Role)roleCombo.SelectedItem;
             var users = new UserRoleService().GetUsersInRole(role.Name);
             usersInRoleListBox.DataSource = users;
@@ -99,6 +105,7 @@ namespace SKFunctionCallingWinform
                     username: userRoleUsernameTextBox.Text,
                     roleName: roleCombo.Text
                 );
+                RefreshUsersInRoleListBox();
             }
             catch (Exception ex)
             {
@@ -113,7 +120,7 @@ namespace SKFunctionCallingWinform
                 var selectedUser = (User)usersListBox.SelectedItem;
 
                 userService.RemoveUser(selectedUser.Username);
-                RefreshList();
+                RefreshUserList();
 
             }
             catch (Exception ex)
@@ -131,7 +138,7 @@ namespace SKFunctionCallingWinform
 
                 new UserRoleService().RemoveUserFromRole(username, roleName);
 
-                MessageBox.Show("User removed from role successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshUsersInRoleListBox();
             }
             catch (Exception ex)
             {
