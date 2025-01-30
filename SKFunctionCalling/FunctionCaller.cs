@@ -28,7 +28,8 @@ internal class FunctionCaller
 
         builder.Plugins.AddFromType<RoleService>()
                        .AddFromType<UserService>()
-                       .AddFromType<UserRoleService>();
+                       .AddFromType<UserRoleService>()
+                       .AddFromType<NotificationService>();
 
         _sk = builder.Build();
 
