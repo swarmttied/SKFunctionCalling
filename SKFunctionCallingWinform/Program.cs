@@ -14,6 +14,7 @@ internal static class Program
     {
 #if RESET
         ResetDb();
+        Console.WriteLine("DB is reset");
 #endif
         AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
 

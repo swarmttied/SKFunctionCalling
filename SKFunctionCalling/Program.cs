@@ -19,6 +19,7 @@ public class Program
 
 #if RESET
         ResetDb();
+        Console.WriteLine("DB is reset.");
 #endif
 
         ForegroundColor = ConsoleColor.White;
