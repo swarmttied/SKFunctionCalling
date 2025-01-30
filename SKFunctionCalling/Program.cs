@@ -17,14 +17,9 @@ public class Program
         string deployment = configuration["deployment"];
         string dbPath = configuration["dbPath"];
 
-        CreateDbIfNotExist();
-        TruncateTables();
-        AddRole("Admin");
-        AddRole("Investigator");
-        AddRole("Auditor");
-        AddRole("Audit Manager");
-        AddRole("Dev");
-        AddRole("Tester");
+#if RESET
+        ResetDb();
+#endif
 
         ForegroundColor = ConsoleColor.White;
 
@@ -67,6 +62,18 @@ Endpoint: {endpoint}
             if (prompt.Contains("exit"))
                 break;
         }
+    }
+
+    private static void ResetDb()
+    {
+        CreateDbIfNotExist();
+        TruncateTables();
+        AddRole("Admin");
+        AddRole("Investigator");
+        AddRole("Auditor");
+        AddRole("Audit Manager");
+        AddRole("Dev");
+        AddRole("Tester");
     }
 }
 

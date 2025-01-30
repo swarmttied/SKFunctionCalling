@@ -13,20 +13,27 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Reset|Any CPU = Reset|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BB76F91B-B314-458D-97B7-1D28745073E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB76F91B-B314-458D-97B7-1D28745073E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB76F91B-B314-458D-97B7-1D28745073E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB76F91B-B314-458D-97B7-1D28745073E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB76F91B-B314-458D-97B7-1D28745073E9}.Reset|Any CPU.ActiveCfg = Reset|Any CPU
+		{BB76F91B-B314-458D-97B7-1D28745073E9}.Reset|Any CPU.Build.0 = Reset|Any CPU
 		{8CA19733-6898-4916-95D7-923330D4629A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8CA19733-6898-4916-95D7-923330D4629A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CA19733-6898-4916-95D7-923330D4629A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CA19733-6898-4916-95D7-923330D4629A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA19733-6898-4916-95D7-923330D4629A}.Reset|Any CPU.ActiveCfg = Reset|Any CPU
+		{8CA19733-6898-4916-95D7-923330D4629A}.Reset|Any CPU.Build.0 = Reset|Any CPU
 		{784F4441-482B-46CD-904D-4354C51EA0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{784F4441-482B-46CD-904D-4354C51EA0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{784F4441-482B-46CD-904D-4354C51EA0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{784F4441-482B-46CD-904D-4354C51EA0B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{784F4441-482B-46CD-904D-4354C51EA0B8}.Reset|Any CPU.ActiveCfg = Reset|Any CPU
+		{784F4441-482B-46CD-904D-4354C51EA0B8}.Reset|Any CPU.Build.0 = Reset|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,4 @@
 using SKFunctionCalling;
-using static SKFunctionCalling.DbHelper;
-using static SKFunctionCalling.RoleService;
 
 namespace SKFunctionCallingWinform
 {
@@ -17,15 +15,6 @@ namespace SKFunctionCallingWinform
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            CreateDbIfNotExist();
-            TruncateTables();
-            AddRole("Admin");
-            AddRole("Investigator");
-            AddRole("Auditor");
-            AddRole("Audit Manager");
-            AddRole("Dev");
-            AddRole("Tester");
-
             PopulateRolesListBox();
         }
 

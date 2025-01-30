@@ -18,9 +18,9 @@ public class UserRole
 public class UserRoleService
 {
     [KernelFunction]
-    public List<UserRole> ListUsersRoles()
+    public List<UserRole> ListUserRoles()
     {
-        WriteLine("Function: ListUsersRoles");
+        WriteLine("Function: ListUserRoles");
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
