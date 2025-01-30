@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SKFunctionCalling\SKFunctionCalling.csproj" />
+    <ProjectReference Include="..\RoleMembetshipLib\RoleMembershipLib.csproj" />
   </ItemGroup>
 
 </Project>

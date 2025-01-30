@@ -15,6 +15,7 @@ public class Program
            .Build();
         string endpoint = configuration["endpoint"];
         string deployment = configuration["deployment"];
+        string dbPath = configuration["dbPath"];
 
         CreateDbIfNotExist();
         TruncateTables();
@@ -41,23 +42,12 @@ Endpoint: {endpoint}
 ------------------------------------------------------------------------------------------
     ");
 
-       
 
-       
+
+        string prompt = "Hello. What is your name?";
         var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment);
         while (true)
         {
-            ForegroundColor = ConsoleColor.White;
-            Write("You > ");
-
-            string prompt = ReadLine();
-            if (string.IsNullOrWhiteSpace(prompt))
-                continue;
-
-
-            if (prompt.Contains("exit"))
-                break;
-
             ForegroundColor = ConsoleColor.DarkYellow;
 
             var response = await functionCaller.Run(prompt);
@@ -65,6 +55,17 @@ Endpoint: {endpoint}
 
             ForegroundColor = ConsoleColor.Green;
             WriteLine($"Bot > {response}");
+
+            ForegroundColor = ConsoleColor.White;
+            Write("You > ");
+
+            prompt = ReadLine();
+            if (string.IsNullOrWhiteSpace(prompt))
+                continue;
+
+
+            if (prompt.Contains("exit"))
+                break;
         }
     }
 }
