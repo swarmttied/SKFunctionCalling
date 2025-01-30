@@ -48,7 +48,7 @@ public class UserService
     }
 
     [KernelFunction]
-    public void AddUser(User user)
+    public void AddUser([Description("The user to add. Please validate email format")] User user)
     {
         WriteLine($"Function: AddUser");
 
