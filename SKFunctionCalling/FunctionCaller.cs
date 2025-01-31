@@ -8,6 +8,19 @@ namespace SKFunctionCalling;
 
 internal class FunctionCaller
 {
+    public class ResponseEventArgs : EventArgs
+    {
+        public string Response { get; set; }
+    }
+
+    public class RateExceededEventArgs : EventArgs
+    {
+        public int WaitTimeInSeconds { get; set; }
+    }
+
+    public event EventHandler<ResponseEventArgs> ResponseReceived;
+    public event EventHandler<RateExceededEventArgs> RateExceeded;
+
     readonly ChatHistory _chatHistory;
     readonly IChatCompletionService _chatService;
     readonly OpenAIPromptExecutionSettings _openAIPromptExecutionSettings;
@@ -48,7 +61,7 @@ If no function in this application is called, tell the user the request is beyon
         _chatService = _sk.GetRequiredService<IChatCompletionService>();
     }
 
-    public async Task<string> Run(string prompt)
+    public async Task Run(string prompt)
     {
         _chatHistory.AddUserMessage(prompt);
         bool success = false;
@@ -66,12 +79,15 @@ If no function in this application is called, tell the user the request is beyon
             {
                 if (ex.Message.Contains("exceeded"))
                 {
-                    Console.WriteLine("Rate limit exceeded. Retrying after 30 seconds.");
-                    Thread.Sleep(TimeSpan.FromSeconds(30));
+                    //Console.WriteLine("Rate limit exceeded. Retrying after 30 seconds.");
+                    var args = new RateExceededEventArgs { WaitTimeInSeconds = 30 };
+                    RateExceeded?.Invoke(this, args);
+                    Thread.Sleep(TimeSpan.FromSeconds(args.WaitTimeInSeconds));
                 }
                 else if (ex.Message.Contains("content_filter"))
                 {
-                    return "The response was filtered due to the prompt triggering Azure OpenAI's content management policy. Please modify your prompt and retry.";
+                    var msg = "The response was filtered due to the prompt triggering Azure OpenAI's content management policy. Please modify your prompt and retry.";
+                    ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = msg });
                 }
                 else
                 {
@@ -90,6 +106,7 @@ If no function in this application is called, tell the user the request is beyon
         }
 
         _chatHistory.AddAssistantMessage(fullMessage);
-        return fullMessage;
+       
+        ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage });
     }
 }

@@ -42,15 +42,13 @@ Endpoint: {endpoint}
 
         string prompt = "Hello. What is your name?";
         var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment);
+        functionCaller.ResponseReceived += FunctionCaller_ResponseReceived;
+        functionCaller.RateExceeded += FunctionCaller_RateExceeded;
         while (true)
         {
             ForegroundColor = ConsoleColor.DarkYellow;
 
-            var response = await functionCaller.Run(prompt);
-
-
-            ForegroundColor = ConsoleColor.Green;
-            WriteLine($"Bot > {response}");
+            await functionCaller.Run(prompt);
 
             ForegroundColor = ConsoleColor.White;
             Write("You > ");
@@ -59,10 +57,26 @@ Endpoint: {endpoint}
             if (string.IsNullOrWhiteSpace(prompt))
                 continue;
 
-
             if (prompt.Contains("exit"))
                 break;
         }
+    }
+
+    private static void FunctionCaller_RateExceeded(object? sender, FunctionCaller.RateExceededEventArgs e)
+    {
+        int sec = 10;
+        e.WaitTimeInSeconds = sec;
+        Console.WriteLine($"Rate limit exceeded. Retrying after {sec} seconds.");
+
+    }
+
+    private static void FunctionCaller_ResponseReceived(object? sender, FunctionCaller.ResponseEventArgs e)
+    {
+        var response = e.Response;
+
+        ForegroundColor = ConsoleColor.Green;
+        WriteLine($"Bot > {response}");
+
     }
 
     private static void ResetDb()
