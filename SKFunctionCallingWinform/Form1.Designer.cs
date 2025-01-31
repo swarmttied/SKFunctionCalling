@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             tabPage1 = new TabPage();
+            richTextBox1 = new RichTextBox();
             sendButton = new Button();
             promptTextBox = new TextBox();
             chatListBox = new ListBox();
@@ -58,6 +59,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(richTextBox1);
             tabPage1.Controls.Add(sendButton);
             tabPage1.Controls.Add(promptTextBox);
             tabPage1.Controls.Add(chatListBox);
@@ -82,15 +84,25 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1608, 412);
+            tabPage1.Size = new Size(1608, 784);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "tabPage1";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            richTextBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            richTextBox1.Location = new Point(185, 230);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(695, 518);
+            richTextBox1.TabIndex = 21;
+            richTextBox1.Text = "";
+            // 
             // sendButton
             // 
             sendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            sendButton.Location = new Point(1485, 292);
+            sendButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            sendButton.Location = new Point(1485, 664);
             sendButton.Name = "sendButton";
             sendButton.Size = new Size(117, 84);
             sendButton.TabIndex = 20;
@@ -102,7 +114,7 @@
             // 
             promptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             promptTextBox.Font = new Font("Segoe UI", 12F);
-            promptTextBox.Location = new Point(897, 292);
+            promptTextBox.Location = new Point(897, 664);
             promptTextBox.Multiline = true;
             promptTextBox.Name = "promptTextBox";
             promptTextBox.Size = new Size(582, 84);
@@ -116,7 +128,7 @@
             chatListBox.ItemHeight = 21;
             chatListBox.Location = new Point(897, 21);
             chatListBox.Name = "chatListBox";
-            chatListBox.Size = new Size(705, 256);
+            chatListBox.Size = new Size(705, 613);
             chatListBox.TabIndex = 18;
             // 
             // getUserButton
@@ -284,7 +296,7 @@
             tabControl1.Location = new Point(12, 24);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1616, 440);
+            tabControl1.Size = new Size(1616, 812);
             tabControl1.TabIndex = 0;
             // 
             // tabPage2
@@ -292,7 +304,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1608, 412);
+            tabPage2.Size = new Size(1608, 784);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "tabPage2";
             tabPage2.UseVisualStyleBackColor = true;
@@ -301,7 +313,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1640, 484);
+            ClientSize = new Size(1640, 856);
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Form1";
@@ -338,5 +350,6 @@
         private Button sendButton;
         private TextBox promptTextBox;
         private ListBox chatListBox;
+        private RichTextBox richTextBox1;
     }
 }
