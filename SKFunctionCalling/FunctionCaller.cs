@@ -6,7 +6,7 @@ using Azure.Identity;
 
 namespace SKFunctionCalling;
 
-internal class FunctionCaller
+public class FunctionCaller
 {
     public class ResponseEventArgs : EventArgs
     {

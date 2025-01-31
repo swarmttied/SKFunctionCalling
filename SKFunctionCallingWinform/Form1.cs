@@ -5,17 +5,25 @@ namespace SKFunctionCallingWinform
     public partial class Form1 : Form
     {
         private UserService userService;
+        private FunctionCaller _functionCaller;
 
 
         public Form1()
         {
             InitializeComponent();
             userService = new UserService();
+            _functionCaller = new FunctionCaller("https://gbb-open-ai.openai.azure.com/", "gpt-4o");
+            _functionCaller.ResponseReceived += _functionCaller_ResponseReceived;
+            _functionCaller.RateExceeded += _functionCaller_RateExceeded;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+
+
+        private async void Form1_Load(object sender, EventArgs e)
         {
             PopulateRolesListBox();
+            RefreshUserList();
+            await _functionCaller.Run("Hello. What is your name?");
         }
 
         private void addUsersButton_Click(object sender, EventArgs e)
@@ -75,7 +83,7 @@ namespace SKFunctionCallingWinform
 
         private void roleCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshUsersInRoleListBox();           
+            RefreshUsersInRoleListBox();
         }
 
         private void RefreshUsersInRoleListBox()
@@ -133,6 +141,33 @@ namespace SKFunctionCallingWinform
             {
                 MessageBox.Show($"Error removing user from role: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private async void sendButton_ClickAsync(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(promptTextBox.Text))
+            {
+                chatListBox.Items.Add($"You > {promptTextBox.Text}");
+                await _functionCaller.Run(promptTextBox.Text);
+                promptTextBox.Clear();
+            }
+        }
+
+        private void _functionCaller_RateExceeded(object? sender, FunctionCaller.RateExceededEventArgs e)
+        {
+            var chatEntry = $"Bot > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
+            chatListBox.Items.Add(chatEntry);
+        }
+
+        private void _functionCaller_ResponseReceived(object? sender, FunctionCaller.ResponseEventArgs e)
+        {
+            var chatEntry = $"Bot > {e.Response}";
+            chatListBox.Items.Add(chatEntry);
+        }
+
+        private void chatListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
