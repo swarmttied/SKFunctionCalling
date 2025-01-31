@@ -12,7 +12,7 @@ namespace SKFunctionCallingWinform
         {
             InitializeComponent();
             userService = new UserService();
-            _functionCaller = new FunctionCaller("https://gbb-open-ai.openai.azure.com/", "gpt-4o");
+            _functionCaller = new FunctionCaller("https://bci-ai-ppe-openai.openai.azure.com/", "bci-gpt4o");
             _functionCaller.ResponseReceived += _functionCaller_ResponseReceived;
             _functionCaller.RateExceeded += _functionCaller_RateExceeded;
         }
@@ -147,8 +147,15 @@ namespace SKFunctionCallingWinform
         {
             if (!string.IsNullOrWhiteSpace(promptTextBox.Text))
             {
-                chatListBox.Items.Add($"You > {promptTextBox.Text}");
+                var prompt = $"You > {promptTextBox.Text}";
+              
+
+                chatListBox.Items.Add(prompt);
+                AddTextToRichTextBox(richTextBox1, prompt);
+                ChangeRichTextBoxColor(richTextBox1, prompt, Color.Black);
+
                 await _functionCaller.Run(promptTextBox.Text);
+
                 promptTextBox.Clear();
             }
         }
@@ -157,17 +164,34 @@ namespace SKFunctionCallingWinform
         {
             var chatEntry = $"Bot > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
             chatListBox.Items.Add(chatEntry);
+          
         }
 
         private void _functionCaller_ResponseReceived(object? sender, FunctionCaller.ResponseEventArgs e)
         {
             var chatEntry = $"Bot > {e.Response}";
             chatListBox.Items.Add(chatEntry);
+            AddTextToRichTextBox(richTextBox1, chatEntry);
+            ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Green);
         }
+       
 
-        private void chatListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ChangeRichTextBoxColor(RichTextBox richTextBox, string text, Color color)
         {
-
+            
+            int startIndex = richTextBox.Text.IndexOf(text);
+            if (startIndex != -1)
+            {
+                richTextBox.Select(startIndex, text.Length);
+                richTextBox.SelectionColor = color;
+                richTextBox.DeselectAll();
+            }
         }
+        private void AddTextToRichTextBox(RichTextBox richTextBox, string text)
+        {
+            richTextBox.AppendText(text + Environment.NewLine);
+        }
+
+
     }
 }
