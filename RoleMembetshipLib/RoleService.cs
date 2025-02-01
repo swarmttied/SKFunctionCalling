@@ -12,8 +12,9 @@ public class Role
 {
     public string Name { get; set; }
 }
-public class RoleService
+public class RoleService : IFunctionCalled
 {
+    public event EventHandler<FunctionCallEventArgs> FunctionCalled;
     public static void AddRole(string role)
     {
         using var connection = DbHelper.GetDbConnection();
@@ -29,7 +30,8 @@ public class RoleService
     [KernelFunction]
     public List<Role> ListRoles()
     {
-        WriteLine("Function: ListRoles");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(ListRoles)));
+        WriteLine($"Function: {nameof(ListRoles)}");
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();

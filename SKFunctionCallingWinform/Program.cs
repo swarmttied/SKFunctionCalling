@@ -1,5 +1,7 @@
+using SKFunctionCalling;
 using static SKFunctionCalling.DbHelper;
 using static SKFunctionCalling.RoleService;
+using static System.Configuration.ConfigurationManager;
 
 
 namespace SKFunctionCallingWinform;
@@ -21,7 +23,25 @@ internal static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
+
+        string endpoint = AppSettings["endpoint"];
+        string deployment = AppSettings["deployment"];
+        IFunctionCalled[] services = { new RoleService(),
+                              new UserService(),
+                              new UserRoleService(),
+                              new NotificationService() };
+        FunctionCaller functionCaller = new(endpoint, deployment, services);
+        var chatBanner =
+ @$"-----------------------------------------------------------------------------------------------------
+This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
+Function Calling allows you to call function in your applications using natural language.
+You may start by introducing youself or asking questions like ""What can you do for me?"" 
+or ""Show me some commands""
+
+Endpoint: {endpoint} 
+   Model: {deployment}
+--------------------------------------------------------------------------------------------------------";
+        Application.Run(new Form1(functionCaller ,chatBanner));
     }
 
     static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)

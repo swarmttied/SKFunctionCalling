@@ -21,12 +21,15 @@ public class User
     }
 }
 
-public class UserService
+public class UserService : IFunctionCalled
 {
+    public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+
     [KernelFunction]
     public List<User> ListUsers()
     {
-        WriteLine("Function: ListUsers");
+        WriteLine($"Function: {nameof(ListUsers)} ");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(ListUsers)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
@@ -51,6 +54,7 @@ public class UserService
     public void AddUser([Description("The user to add. Please validate email format")] User user)
     {
         WriteLine($"Function: AddUser");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(AddUser)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
@@ -68,6 +72,7 @@ public class UserService
     public void RemoveUser(string username)
     {
         WriteLine($"Function: RemoveUser");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(RemoveUser)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
@@ -76,12 +81,12 @@ public class UserService
         command.ExecuteNonQuery();
     }
 
-
     [KernelFunction]
     [Description("Checks if the user is in the system")]
     public User GetUser(string username)
     {
         WriteLine($"Function: GetUser");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(GetUser)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();

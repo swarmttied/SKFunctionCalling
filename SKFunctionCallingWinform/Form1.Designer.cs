@@ -82,6 +82,7 @@
             promptTextBox.Name = "promptTextBox";
             promptTextBox.Size = new Size(582, 84);
             promptTextBox.TabIndex = 41;
+            promptTextBox.Enter += promptTextBox_Enter;
             // 
             // getUserButton
             // 
