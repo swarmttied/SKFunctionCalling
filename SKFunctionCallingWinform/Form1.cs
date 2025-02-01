@@ -147,14 +147,15 @@ namespace SKFunctionCallingWinform
         {
             if (!string.IsNullOrWhiteSpace(promptTextBox.Text))
             {
-                var prompt = $"You > {promptTextBox.Text}";
-              
+                string input = promptTextBox.Text;
 
-                chatListBox.Items.Add(prompt);
+                var prompt = $"You > {input}";
+                promptTextBox.Clear();
+
                 AddTextToRichTextBox(richTextBox1, prompt);
                 ChangeRichTextBoxColor(richTextBox1, prompt, Color.Black);
 
-                await _functionCaller.Run(promptTextBox.Text);
+                await _functionCaller.Run(input);
 
                 promptTextBox.Clear();
             }
@@ -163,14 +164,14 @@ namespace SKFunctionCallingWinform
         private void _functionCaller_RateExceeded(object? sender, FunctionCaller.RateExceededEventArgs e)
         {
             var chatEntry = $"Bot > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
-            chatListBox.Items.Add(chatEntry);
-          
+            AddTextToRichTextBox(richTextBox1, chatEntry);
+            ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Yellow);
+
         }
 
         private void _functionCaller_ResponseReceived(object? sender, FunctionCaller.ResponseEventArgs e)
         {
             var chatEntry = $"Bot > {e.Response}";
-            chatListBox.Items.Add(chatEntry);
             AddTextToRichTextBox(richTextBox1, chatEntry);
             ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Green);
         }
