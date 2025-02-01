@@ -31,7 +31,6 @@
             richTextBox1 = new RichTextBox();
             sendButton = new Button();
             promptTextBox = new TextBox();
-            chatListBox = new ListBox();
             getUserButton = new Button();
             usersInRoleListBox = new ListBox();
             roleCombo = new ComboBox();
@@ -83,17 +82,6 @@
             promptTextBox.Name = "promptTextBox";
             promptTextBox.Size = new Size(582, 84);
             promptTextBox.TabIndex = 41;
-            // 
-            // chatListBox
-            // 
-            chatListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            chatListBox.Font = new Font("Segoe UI", 12F);
-            chatListBox.FormattingEnabled = true;
-            chatListBox.ItemHeight = 21;
-            chatListBox.Location = new Point(652, 60);
-            chatListBox.Name = "chatListBox";
-            chatListBox.Size = new Size(200, 109);
-            chatListBox.TabIndex = 40;
             // 
             // getUserButton
             // 
@@ -278,7 +266,6 @@
             Controls.Add(richTextBox1);
             Controls.Add(sendButton);
             Controls.Add(promptTextBox);
-            Controls.Add(chatListBox);
             Controls.Add(getUserButton);
             Controls.Add(usersInRoleListBox);
             Controls.Add(roleCombo);
@@ -309,7 +296,6 @@
         private RichTextBox richTextBox1;
         private Button sendButton;
         private TextBox promptTextBox;
-        private ListBox chatListBox;
         private Button getUserButton;
         private ListBox usersInRoleListBox;
         private ComboBox roleCombo;
