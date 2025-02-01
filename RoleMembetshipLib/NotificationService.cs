@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace SKFunctionCalling
 {
-    public class NotificationService
+    public class NotificationService : IFunctionCalled
     {
+        public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+
         [KernelFunction]
         public void SendEmail(string to, string subject, string body)
         {
             Console.WriteLine("Function: SendEmail");
-            Console.WriteLine($"Sending email to {to} with subject '{subject}' and body {body}.");
+            FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(SendEmail)));
+            var logMsg = $"Sending email to {to} with subject '{subject}' and body {body}.";
+            Console.WriteLine(logMsg);
+            FunctionCalled?.Invoke(this, new FunctionCallEventArgs(logMsg));
+
             // Simulate email sending
         }
     }

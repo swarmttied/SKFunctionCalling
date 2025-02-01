@@ -15,7 +15,6 @@ public class Program
            .Build();
         string endpoint = configuration["endpoint"];
         string deployment = configuration["deployment"];
-        string dbPath = configuration["dbPath"];
 
 #if RESET
         ResetDb();
@@ -24,14 +23,12 @@ public class Program
 
         ForegroundColor = ConsoleColor.White;
 
-        WriteLine($@"
-------------------------------------------------------------------------------------------
+        WriteLine(
+$@"---------------------------------------------------------------------------------------
 This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
 Function Calling allows you to call function in your applications using natural language.
 You may start by introducing youself or asking questions like ""What can you do for me?"" 
 or ""Show me some commands""
-
-Type ""exit"" to exit the app.
 
 Endpoint: {endpoint} 
    Model: {deployment}
@@ -41,7 +38,11 @@ Endpoint: {endpoint}
 
 
         string prompt = "Hello. What is your name?";
-        var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment);
+        IFunctionCalled[] services = { new RoleService(), 
+                              new UserService(), 
+                              new UserRoleService(), 
+                              new NotificationService() };
+        var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment, services: services);
         functionCaller.ResponseReceived += FunctionCaller_ResponseReceived;
         functionCaller.RateExceeded += FunctionCaller_RateExceeded;
         while (true)

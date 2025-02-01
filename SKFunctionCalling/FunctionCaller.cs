@@ -25,8 +25,9 @@ public class FunctionCaller
     readonly IChatCompletionService _chatService;
     readonly OpenAIPromptExecutionSettings _openAIPromptExecutionSettings;
     readonly Kernel _sk;
-    public FunctionCaller(string AIendpoint, string AIdeployment)
+    public FunctionCaller(string AIendpoint, string AIdeployment, IFunctionCalled[] services)
     {
+        Services = services;
         var builder = Kernel.CreateBuilder();
         builder.AddAzureOpenAIChatCompletion(
             deploymentName: AIdeployment,
@@ -39,10 +40,13 @@ public class FunctionCaller
         //   endpoint: AIendpoint,
         //   apiKey: "key here");
 
-        builder.Plugins.AddFromType<RoleService>()
-                       .AddFromType<UserService>()
-                       .AddFromType<UserRoleService>()
-                       .AddFromType<NotificationService>();
+        //builder.Plugins.AddFromType<RoleService>()
+        //               .AddFromType<UserService>()
+        //               .AddFromType<UserRoleService>()
+        //               .AddFromType<NotificationService>();
+
+        foreach (var service in services)
+            builder.Plugins.AddFromObject(service);
 
         _sk = builder.Build();
 
@@ -109,4 +113,6 @@ If no function in this application is called, tell the user the request is beyon
        
         ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage });
     }
+
+    public IFunctionCalled[] Services { get; private set; }
 }

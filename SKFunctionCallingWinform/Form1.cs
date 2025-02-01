@@ -1,4 +1,6 @@
 using SKFunctionCalling;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Forms;
 
 namespace SKFunctionCallingWinform
 {
@@ -6,15 +8,22 @@ namespace SKFunctionCallingWinform
     {
         private UserService userService;
         private FunctionCaller _functionCaller;
+        readonly string _chatBanner;
 
 
-        public Form1()
+        public Form1(FunctionCaller functionCaller, string chatBanner)
         {
             InitializeComponent();
+            _chatBanner = chatBanner;
             userService = new UserService();
-            _functionCaller = new FunctionCaller("https://bci-ai-ppe-openai.openai.azure.com/", "bci-gpt4o");
+            _functionCaller = functionCaller;
             _functionCaller.ResponseReceived += _functionCaller_ResponseReceived;
             _functionCaller.RateExceeded += _functionCaller_RateExceeded;
+
+            foreach (IFunctionCalled svc in functionCaller.Services)
+            {
+                svc.FunctionCalled += Svc_FunctionCalled;
+            }
         }
 
 
@@ -23,7 +32,13 @@ namespace SKFunctionCallingWinform
         {
             PopulateRolesListBox();
             RefreshUserList();
+            richTextBox1.AppendText(_chatBanner + Environment.NewLine);
             await _functionCaller.Run("Hello. What is your name?");
+        }
+
+        private void AddChatBanner()
+        {
+            throw new NotImplementedException();
         }
 
         private void addUsersButton_Click(object sender, EventArgs e)
@@ -158,12 +173,13 @@ namespace SKFunctionCallingWinform
                 await _functionCaller.Run(input);
 
                 promptTextBox.Clear();
+                promptTextBox.Focus();
             }
         }
 
         private void _functionCaller_RateExceeded(object? sender, FunctionCaller.RateExceededEventArgs e)
         {
-            var chatEntry = $"Bot > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
+            var chatEntry = $"System > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
             AddTextToRichTextBox(richTextBox1, chatEntry);
             ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Yellow);
 
@@ -175,11 +191,11 @@ namespace SKFunctionCallingWinform
             AddTextToRichTextBox(richTextBox1, chatEntry);
             ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Green);
         }
-       
+
 
         private void ChangeRichTextBoxColor(RichTextBox richTextBox, string text, Color color)
         {
-            
+
             int startIndex = richTextBox.Text.IndexOf(text);
             if (startIndex != -1)
             {
@@ -193,6 +209,20 @@ namespace SKFunctionCallingWinform
             richTextBox.AppendText(text + Environment.NewLine);
         }
 
+        private void Svc_FunctionCalled(object? sender, FunctionCallEventArgs e)
+        {
+            var chatEntry = $"Function: {e.FunctionName}";
+            Invoke(() =>
+            {
+                AddTextToRichTextBox(richTextBox1, chatEntry);
+                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Blue);
+            });
 
+        }
+
+        private void promptTextBox_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = sendButton;
+        }
     }
 }

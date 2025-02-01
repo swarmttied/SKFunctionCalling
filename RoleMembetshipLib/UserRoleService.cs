@@ -15,12 +15,15 @@ public class UserRole
     public string Rolename { get; set; }
 }
 
-public class UserRoleService
+public class UserRoleService : IFunctionCalled
 {
+    public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+
     [KernelFunction]
     public List<UserRole> ListUserRoles()
     {
-        WriteLine("Function: ListUserRoles");
+        WriteLine($"Function: {nameof(ListUserRoles)}");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(ListUserRoles)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
@@ -43,7 +46,8 @@ public class UserRoleService
     [KernelFunction]
     public List<User> GetUsersInRole(string roleName)
     {
-        WriteLine($"Function: GetUsersInRole");
+        WriteLine($"Function: {nameof(GetUsersInRole)}");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(GetUsersInRole)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
@@ -69,11 +73,10 @@ public class UserRoleService
     }
 
     [KernelFunction]
-    public void AddUserToRole(
-        string username,
-        string roleName)
+    public void AddUserToRole(string username, string roleName)
     {
-        WriteLine($"Function: AddUserToRole");
+        WriteLine($"Function: {nameof(AddUserToRole)}");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(AddUserToRole)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
@@ -89,7 +92,8 @@ public class UserRoleService
     [KernelFunction]
     public void RemoveUserFromRole(string username, string roleName)
     {
-        WriteLine($"Function: RemoveUserFromRole");
+        WriteLine($"Function: {nameof(RemoveUserFromRole)}");
+        FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(RemoveUserFromRole)));
 
         using var connection = DbHelper.GetDbConnection();
         var command = connection.CreateCommand();
