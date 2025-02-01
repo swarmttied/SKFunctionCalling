@@ -7,6 +7,8 @@ namespace SKFunctionCallingWinform
     public partial class Form1 : Form
     {
         private UserService userService;
+        private RoleService roleService;
+        private UserRoleService userRoleService;
         private FunctionCaller _functionCaller;
         readonly string _chatBanner;
 
@@ -24,9 +26,18 @@ namespace SKFunctionCallingWinform
             {
                 svc.FunctionCalled += Svc_FunctionCalled;
             }
+            userService.FunctionCalled += Form_FunctionCalled;
+            roleService = new RoleService();
+            roleService.FunctionCalled += Form_FunctionCalled;
+            userRoleService = new UserRoleService();
+            userRoleService.FunctionCalled += Form_FunctionCalled;
+
         }
 
-
+        private void Form_FunctionCalled(object? sender, FunctionCallEventArgs e)
+        {
+            calledFunctionsListBox.Items.Add(e.FunctionName);
+        }
 
         private async void Form1_Load(object sender, EventArgs e)
         {
@@ -34,12 +45,9 @@ namespace SKFunctionCallingWinform
             RefreshUserList();
             richTextBox1.AppendText(_chatBanner + Environment.NewLine);
             await _functionCaller.Run("Hello. What is your name?");
+            promptTextBox.Focus();
         }
 
-        private void AddChatBanner()
-        {
-            throw new NotImplementedException();
-        }
 
         private void addUsersButton_Click(object sender, EventArgs e)
         {
@@ -73,7 +81,6 @@ namespace SKFunctionCallingWinform
 
         private void PopulateRolesListBox()
         {
-            RoleService roleService = new RoleService();
             var roles = roleService.ListRoles();
             roleCombo.DataSource = roles;
             roleCombo.DisplayMember = "Name";
@@ -104,7 +111,7 @@ namespace SKFunctionCallingWinform
         private void RefreshUsersInRoleListBox()
         {
             var role = (Role)roleCombo.SelectedItem;
-            var users = new UserRoleService().GetUsersInRole(role.Name);
+            var users = userRoleService.GetUsersInRole(role.Name);
             usersInRoleListBox.DataSource = users;
             usersInRoleListBox.DisplayMember = "Username";
         }
@@ -113,7 +120,7 @@ namespace SKFunctionCallingWinform
         {
             try
             {
-                new UserRoleService().AddUserToRole(
+                userRoleService.AddUserToRole(
                     username: userRoleUsernameTextBox.Text,
                     roleName: roleCombo.Text
                 );
@@ -148,7 +155,7 @@ namespace SKFunctionCallingWinform
                 var username = userRoleUsernameTextBox.Text;
                 var roleName = roleCombo.Text;
 
-                new UserRoleService().RemoveUserFromRole(username, roleName);
+                userRoleService.RemoveUserFromRole(username, roleName);
 
                 RefreshUsersInRoleListBox();
             }
@@ -215,7 +222,7 @@ namespace SKFunctionCallingWinform
             Invoke(() =>
             {
                 AddTextToRichTextBox(richTextBox1, chatEntry);
-                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Blue);
+                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Purple);
             });
 
         }
@@ -223,6 +230,36 @@ namespace SKFunctionCallingWinform
         private void promptTextBox_Enter(object sender, EventArgs e)
         {
             this.AcceptButton = sendButton;
+        }
+
+        private void listUsersButton_Click_1(object sender, EventArgs e)
+        {
+            RefreshUserList();
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+                
+        }
+
+        private void usersListBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = getUserButton;
+        }
+
+        private void usernameTextBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = addUsersButton;
+        }
+
+        private void userRoleUsernameTextBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = addUserRoleButton;
+        }
+
+        private void usersInRoleListBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = remnoveUserRoleButton;
         }
     }
 }
