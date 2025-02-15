@@ -60,9 +60,9 @@
             // 
             richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             richTextBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            richTextBox1.Location = new Point(703, 38);
+            richTextBox1.Location = new Point(593, 12);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(711, 602);
+            richTextBox1.Size = new Size(834, 602);
             richTextBox1.TabIndex = 22;
             richTextBox1.Text = "";
             // 
@@ -70,7 +70,7 @@
             // 
             sendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             sendButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            sendButton.Location = new Point(1297, 668);
+            sendButton.Location = new Point(1310, 642);
             sendButton.Name = "sendButton";
             sendButton.Size = new Size(117, 84);
             sendButton.TabIndex = 25;
@@ -82,17 +82,17 @@
             // 
             promptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             promptTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            promptTextBox.Location = new Point(703, 667);
+            promptTextBox.Location = new Point(593, 641);
             promptTextBox.Multiline = true;
             promptTextBox.Name = "promptTextBox";
-            promptTextBox.Size = new Size(588, 84);
+            promptTextBox.Size = new Size(711, 84);
             promptTextBox.TabIndex = 24;
             promptTextBox.Enter += promptTextBox_Enter;
             // 
             // getUserButton
             // 
             getUserButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            getUserButton.Location = new Point(35, 208);
+            getUserButton.Location = new Point(12, 188);
             getUserButton.Name = "getUserButton";
             getUserButton.Size = new Size(94, 34);
             getUserButton.TabIndex = 2;
@@ -105,7 +105,7 @@
             usersInRoleListBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             usersInRoleListBox.FormattingEnabled = true;
             usersInRoleListBox.ItemHeight = 21;
-            usersInRoleListBox.Location = new Point(320, 354);
+            usersInRoleListBox.Location = new Point(297, 334);
             usersInRoleListBox.Name = "usersInRoleListBox";
             usersInRoleListBox.Size = new Size(172, 130);
             usersInRoleListBox.TabIndex = 20;
@@ -115,7 +115,7 @@
             // 
             roleCombo.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             roleCombo.FormattingEnabled = true;
-            roleCombo.Location = new Point(320, 319);
+            roleCombo.Location = new Point(297, 299);
             roleCombo.Name = "roleCombo";
             roleCombo.Size = new Size(172, 29);
             roleCombo.TabIndex = 19;
@@ -124,7 +124,7 @@
             // remnoveUserRoleButton
             // 
             remnoveUserRoleButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            remnoveUserRoleButton.Location = new Point(398, 491);
+            remnoveUserRoleButton.Location = new Point(375, 471);
             remnoveUserRoleButton.Name = "remnoveUserRoleButton";
             remnoveUserRoleButton.Size = new Size(94, 34);
             remnoveUserRoleButton.TabIndex = 21;
@@ -135,7 +135,7 @@
             // addUserRoleButton
             // 
             addUserRoleButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            addUserRoleButton.Location = new Point(135, 354);
+            addUserRoleButton.Location = new Point(112, 334);
             addUserRoleButton.Name = "addUserRoleButton";
             addUserRoleButton.Size = new Size(94, 34);
             addUserRoleButton.TabIndex = 17;
@@ -147,7 +147,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            label5.Location = new Point(36, 322);
+            label5.Location = new Point(13, 302);
             label5.Name = "label5";
             label5.Size = new Size(83, 21);
             label5.TabIndex = 13;
@@ -156,7 +156,7 @@
             // userRoleUsernameTextBox
             // 
             userRoleUsernameTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            userRoleUsernameTextBox.Location = new Point(135, 319);
+            userRoleUsernameTextBox.Location = new Point(112, 299);
             userRoleUsernameTextBox.Name = "userRoleUsernameTextBox";
             userRoleUsernameTextBox.Size = new Size(156, 29);
             userRoleUsernameTextBox.TabIndex = 14;
@@ -165,7 +165,7 @@
             // emailTextBox
             // 
             emailTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            emailTextBox.Location = new Point(330, 142);
+            emailTextBox.Location = new Point(307, 122);
             emailTextBox.Name = "emailTextBox";
             emailTextBox.Size = new Size(231, 29);
             emailTextBox.TabIndex = 10;
@@ -173,7 +173,7 @@
             // usernameTextBox
             // 
             usernameTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            usernameTextBox.Location = new Point(330, 72);
+            usernameTextBox.Location = new Point(307, 52);
             usernameTextBox.Name = "usernameTextBox";
             usernameTextBox.Size = new Size(231, 29);
             usernameTextBox.TabIndex = 6;
@@ -182,7 +182,7 @@
             // fullnameTextBox
             // 
             fullnameTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            fullnameTextBox.Location = new Point(330, 107);
+            fullnameTextBox.Location = new Point(307, 87);
             fullnameTextBox.Name = "fullnameTextBox";
             fullnameTextBox.Size = new Size(231, 29);
             fullnameTextBox.TabIndex = 8;
@@ -191,7 +191,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            label3.Location = new Point(276, 145);
+            label3.Location = new Point(253, 125);
             label3.Name = "label3";
             label3.Size = new Size(48, 21);
             label3.TabIndex = 9;
@@ -201,7 +201,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            label2.Location = new Point(241, 75);
+            label2.Location = new Point(218, 55);
             label2.Name = "label2";
             label2.Size = new Size(83, 21);
             label2.TabIndex = 5;
@@ -211,7 +211,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            label1.Location = new Point(249, 110);
+            label1.Location = new Point(226, 90);
             label1.Name = "label1";
             label1.Size = new Size(75, 21);
             label1.TabIndex = 7;
@@ -222,7 +222,7 @@
             usersListBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             usersListBox.FormattingEnabled = true;
             usersListBox.ItemHeight = 21;
-            usersListBox.Location = new Point(35, 72);
+            usersListBox.Location = new Point(12, 52);
             usersListBox.Name = "usersListBox";
             usersListBox.Size = new Size(194, 130);
             usersListBox.TabIndex = 1;
@@ -231,7 +231,7 @@
             // removeUsersButton
             // 
             removeUsersButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            removeUsersButton.Location = new Point(135, 208);
+            removeUsersButton.Location = new Point(112, 188);
             removeUsersButton.Name = "removeUsersButton";
             removeUsersButton.Size = new Size(94, 34);
             removeUsersButton.TabIndex = 3;
@@ -242,7 +242,7 @@
             // addUsersButton
             // 
             addUsersButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            addUsersButton.Location = new Point(330, 177);
+            addUsersButton.Location = new Point(307, 157);
             addUsersButton.Name = "addUsersButton";
             addUsersButton.Size = new Size(94, 34);
             addUsersButton.TabIndex = 11;
@@ -253,7 +253,7 @@
             // listUsersButton
             // 
             listUsersButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            listUsersButton.Location = new Point(35, 32);
+            listUsersButton.Location = new Point(12, 12);
             listUsersButton.Name = "listUsersButton";
             listUsersButton.Size = new Size(94, 34);
             listUsersButton.TabIndex = 0;
@@ -265,7 +265,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(249, 36);
+            label4.Location = new Point(226, 16);
             label4.Name = "label4";
             label4.Size = new Size(60, 25);
             label4.TabIndex = 4;
@@ -275,7 +275,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(36, 278);
+            label7.Location = new Point(13, 258);
             label7.Name = "label7";
             label7.Size = new Size(112, 25);
             label7.TabIndex = 12;
@@ -286,7 +286,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(320, 278);
+            label8.Location = new Point(297, 258);
             label8.Name = "label8";
             label8.Size = new Size(59, 25);
             label8.TabIndex = 18;
@@ -294,9 +294,10 @@
             // 
             // label9
             // 
+            label9.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(703, 643);
+            label9.Location = new Point(593, 617);
             label9.Name = "label9";
             label9.Size = new Size(65, 21);
             label9.TabIndex = 23;
@@ -307,7 +308,7 @@
             calledFunctionsListBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             calledFunctionsListBox.FormattingEnabled = true;
             calledFunctionsListBox.ItemHeight = 21;
-            calledFunctionsListBox.Location = new Point(35, 579);
+            calledFunctionsListBox.Location = new Point(12, 553);
             calledFunctionsListBox.Name = "calledFunctionsListBox";
             calledFunctionsListBox.Size = new Size(274, 172);
             calledFunctionsListBox.TabIndex = 26;
@@ -316,7 +317,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(35, 551);
+            label6.Location = new Point(12, 525);
             label6.Name = "label6";
             label6.Size = new Size(158, 25);
             label6.TabIndex = 27;
@@ -326,7 +327,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1439, 790);
+            ClientSize = new Size(1439, 737);
             Controls.Add(label6);
             Controls.Add(calledFunctionsListBox);
             Controls.Add(label9);
