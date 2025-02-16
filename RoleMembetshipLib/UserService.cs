@@ -11,9 +11,9 @@ namespace SKFunctionCalling;
 
 public class User
 {
-    public string Username { get; set; }
-    public string Fullname { get; set; }
-    public string Email { get; set; }
+    public required string Username { get; set; }
+    public required string Fullname { get; set; }
+    public required string Email { get; set; }
 
     override public string ToString()
     {
@@ -23,7 +23,7 @@ public class User
 
 public class UserService : IFunctionCalled
 {
-    public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+    public event EventHandler<FunctionCallEventArgs>? FunctionCalled;
 
     [KernelFunction]
     public List<User> ListUsers()

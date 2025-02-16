@@ -10,11 +10,11 @@ using static System.Console;
 namespace SKFunctionCalling;
 public class Role
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
 }
 public class RoleService : IFunctionCalled
 {
-    public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+    public event EventHandler<FunctionCallEventArgs>? FunctionCalled;
     public static void AddRole(string role)
     {
         using var connection = DbHelper.GetDbConnection();

@@ -9,7 +9,7 @@ namespace SKFunctionCalling
 {
     public class NotificationService : IFunctionCalled
     {
-        public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+        public event EventHandler<FunctionCallEventArgs>? FunctionCalled;
 
         [KernelFunction]
         public void SendEmail(string to, string subject, string body)

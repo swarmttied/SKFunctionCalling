@@ -30,7 +30,7 @@ internal static class Program
                               new UserService(),
                               new UserRoleService(),
                               new NotificationService() };
-        FunctionCaller functionCaller = new(endpoint, deployment, services);
+        FunctionCaller functionCaller = new(AIendpoint:endpoint, AIdeployment:deployment, services:services);
         var chatBanner =
  @$"-----------------------------------------------------------------------------------------------------
 This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
