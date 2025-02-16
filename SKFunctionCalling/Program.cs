@@ -9,6 +9,10 @@ public class Program
 {
     public static async Task Main()
     {
+        var dbConStr = "Server=tcp:giobsql.database.windows.net,1433;Initial Catalog=BlueCorner;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
+        DbSchemaHelper.PrintDatabaseSchema(dbConStr);   
+
+
         var configuration = new ConfigurationBuilder()
            .SetBasePath(Directory.GetCurrentDirectory())
            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

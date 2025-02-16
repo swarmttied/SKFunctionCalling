@@ -10,7 +10,7 @@ public class FunctionCaller
 {
     public class ResponseEventArgs : EventArgs
     {
-        public string Response { get; set; }
+        public string? Response { get; set; }
     }
 
     public class RateExceededEventArgs : EventArgs
@@ -18,21 +18,23 @@ public class FunctionCaller
         public int WaitTimeInSeconds { get; set; }
     }
 
-    public event EventHandler<ResponseEventArgs> ResponseReceived;
-    public event EventHandler<RateExceededEventArgs> RateExceeded;
+    public event EventHandler<ResponseEventArgs>? ResponseReceived;
+    public event EventHandler<RateExceededEventArgs>? RateExceeded;
 
     readonly ChatHistory _chatHistory;
     readonly IChatCompletionService _chatService;
     readonly OpenAIPromptExecutionSettings _openAIPromptExecutionSettings;
     readonly Kernel _sk;
-    public FunctionCaller(string AIendpoint, string AIdeployment, IFunctionCalled[] services)
+    public FunctionCaller(string AIendpoint, string AIdeployment, string? instructions=null, IFunctionCalled[]? services=null)
     {
-        Services = services;
         var builder = Kernel.CreateBuilder();
         builder.AddAzureOpenAIChatCompletion(
             deploymentName: AIdeployment,
             endpoint: AIendpoint,
             credentials: new AzureCliCredential());
+
+
+        _openAIPromptExecutionSettings = new();
 
         // Use this if you prefer API key (not recommended)
         //builder.AddAzureOpenAIChatCompletion(
@@ -44,23 +46,22 @@ public class FunctionCaller
         //               .AddFromType<UserService>()
         //               .AddFromType<UserRoleService>()
         //               .AddFromType<NotificationService>();
-
-        foreach (var service in services)
-            builder.Plugins.AddFromObject(service);
+        if (services != null)
+        {
+            Services = services;
+            foreach (var service in services)
+                builder.Plugins.AddFromObject(service);
+            _openAIPromptExecutionSettings.ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions;
+        }
 
         _sk = builder.Build();
 
-        var instructions = @"You are the Role Membership Agent. You assist with user user access needs.
+        instructions ??= @"You are the Role Membership Agent. You assist with user user access needs.
 You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
 
 If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
 ";
         _chatHistory = new ChatHistory(instructions);
-
-        _openAIPromptExecutionSettings = new()
-        {
-            ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions
-        };
 
         _chatService = _sk.GetRequiredService<IChatCompletionService>();
     }
@@ -114,5 +115,5 @@ If no function in this application is called, tell the user the request is beyon
         ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage });
     }
 
-    public IFunctionCalled[] Services { get; private set; }
+    public IFunctionCalled[]? Services { get; private set; }
 }
