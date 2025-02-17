@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Text;
 using Microsoft.Data;
 using Microsoft.Data.SqlClient;
 
@@ -6,7 +8,7 @@ namespace SKFunctionCalling;
 
 public static class DbSchemaHelper
 {
-    public static void PrintDatabaseSchema(string connectionString)
+    public static string PrintDatabaseSchema(string connectionString)
     {
         using var connection = new SqlConnection(connectionString);
         connection.Open();
@@ -23,7 +25,7 @@ public static class DbSchemaHelper
         while (reader.Read())
         {
             string tableName = reader.GetString(0);
-            Console.WriteLine($"Table: {tableName}");
+            //Console.WriteLine($"Table: {tableName}");
             tables.Add(tableName);
             //PrintTableSchema(connection, tableName);
             //PrintTableConstraints(connection, tableName);
@@ -31,14 +33,19 @@ public static class DbSchemaHelper
         }
         reader.Close();
         reader.DisposeAsync();
-        foreach(var tbl in tables)
+        StringBuilder sb = new();
+        foreach (var tbl in tables)
         {
-            PrintTableSchema(connection, tbl);
+            sb.Append($"SK.{tbl} ");
+            sb.Append(PrintTableSchema(connection, tbl));
             PrintTableConstraints(connection, tbl);
         }
+
+        string schemaStr = sb.ToString();
+        return schemaStr;
     }
 
-    private static void PrintTableSchema(SqlConnection connection, string tableName)
+    private static string PrintTableSchema(SqlConnection connection, string tableName)
     {
         using var command = connection.CreateCommand();
         command.CommandText = @"
@@ -47,14 +54,20 @@ public static class DbSchemaHelper
                 WHERE TABLE_NAME = @TableName;
             ";
         command.Parameters.AddWithValue("@TableName", tableName);
-
+        StringBuilder sb  = new("(");
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
             string columnName = reader.GetString(0);
             string columnType = reader.GetString(1);
-            Console.WriteLine($"\tColumn: {columnName}, Type: {columnType}");
+            //sb.Append($"{columnName}:{columnType},");
+            sb.Append($"{columnName},");
+            //Console.WriteLine($"\tColumn: {columnName}, Type: {columnType}");
         }
+        string res = sb.ToString().TrimEnd(',');
+        return res + ")\n";
+
+
     }
 
     private static void PrintTableConstraints(SqlConnection connection, string tableName)
@@ -74,7 +87,7 @@ public static class DbSchemaHelper
         {
             string constraintType = reader.GetString(0);
             string columnName = reader.GetString(1);
-            Console.WriteLine($"\tConstraint: {constraintType}, Column: {columnName}");
+            //Console.WriteLine($"\tConstraint: {constraintType}, Column: {columnName}");
         }
     }
 
@@ -95,7 +108,23 @@ public static class DbSchemaHelper
         {
             string indexName = reader.GetString(0);
             string columnName = reader.GetString(1);
-            Console.WriteLine($"\tIndex: {indexName}, Column: {columnName}");
+           // Console.WriteLine($"\tIndex: {indexName}, Column: {columnName}");
         }
     }
+
+    public static DataTable RunQuery(string connectionString, string query)
+    {
+        using var connection = new SqlConnection(connectionString);
+        connection.Open();
+
+        using var command = connection.CreateCommand();
+        command.CommandText = query;
+
+        using var adapter = new SqlDataAdapter(command);
+        var dataTable = new DataTable();
+        adapter.Fill(dataTable);
+
+        return dataTable;
+    }
+
 }
