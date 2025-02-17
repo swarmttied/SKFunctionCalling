@@ -9,17 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DbSchemaHelper.cs" />
+    <Compile Remove="FunctionCaller.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="DbSchemaHelper.cs" />
+    <None Include="FunctionCaller.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.13.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.30.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RoleMembetshipLib\RoleMembershipLib.csproj" />
+    <ProjectReference Include="..\SKLIb\SKLIb.csproj" />
   </ItemGroup>
 
   <ItemGroup>

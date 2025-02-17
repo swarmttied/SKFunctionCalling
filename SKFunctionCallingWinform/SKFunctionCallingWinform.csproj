@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RoleMembetshipLib\RoleMembershipLib.csproj" />
-    <ProjectReference Include="..\SKFunctionCalling\SKFunctionCalling.csproj" />
+    <ProjectReference Include="..\SKLIb\SKLIb.csproj" />
   </ItemGroup>
 
 </Project>
