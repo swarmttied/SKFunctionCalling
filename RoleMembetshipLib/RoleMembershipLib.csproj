@@ -7,9 +7,20 @@
     <Configurations>Debug;Release;Reset</Configurations>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="FunctionCallEventArgs.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="FunctionCallEventArgs.cs" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SemanticKernel" Version="1.30.0" />
-		<PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SKLIb\SKLIb.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.SemanticKernel;
+using SKLIb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace SKFunctionCalling
         [KernelFunction]
         public void SendEmail(string to, string subject, string body)
         {
-            Console.WriteLine("Function: SendEmail");
             FunctionCalled?.Invoke(this, new FunctionCallEventArgs(nameof(SendEmail)));
             var logMsg = $"Sending email to {to} with subject '{subject}' and body {body}.";
             Console.WriteLine(logMsg);

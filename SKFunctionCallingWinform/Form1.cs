@@ -1,6 +1,6 @@
 using SKFunctionCalling;
-using static System.Net.Mime.MediaTypeNames;
-using System.Windows.Forms;
+using SKLIb;
+
 
 namespace SKFunctionCallingWinform
 {
@@ -9,11 +9,11 @@ namespace SKFunctionCallingWinform
         private UserService userService;
         private RoleService roleService;
         private UserRoleService userRoleService;
-        private FunctionCaller _functionCaller;
+        private SKClient _functionCaller;
         readonly string _chatBanner;
 
 
-        public Form1(FunctionCaller functionCaller, string chatBanner)
+        public Form1(SKClient functionCaller, string chatBanner)
         {
             InitializeComponent();
             _chatBanner = chatBanner;
@@ -44,7 +44,7 @@ namespace SKFunctionCallingWinform
             PopulateRolesListBox();
             RefreshUserList();
             richTextBox1.AppendText(_chatBanner + Environment.NewLine);
-            await _functionCaller.Run("Hello. What is your name?");
+            await _functionCaller.RunAsync("Hello. What is your name?");
             promptTextBox.Focus();
         }
 
@@ -177,14 +177,14 @@ namespace SKFunctionCallingWinform
                 AddTextToRichTextBox(richTextBox1, prompt);
                 ChangeRichTextBoxColor(richTextBox1, prompt, Color.Black);
 
-                await _functionCaller.Run(input);
+                await _functionCaller.RunAsync(input);
 
                 promptTextBox.Clear();
                 promptTextBox.Focus();
             }
         }
 
-        private void _functionCaller_RateExceeded(object? sender, FunctionCaller.RateExceededEventArgs e)
+        private void _functionCaller_RateExceeded(object? sender, SKClient.RateExceededEventArgs e)
         {
             var chatEntry = $"System > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
             AddTextToRichTextBox(richTextBox1, chatEntry);
@@ -192,7 +192,7 @@ namespace SKFunctionCallingWinform
 
         }
 
-        private void _functionCaller_ResponseReceived(object? sender, FunctionCaller.ResponseEventArgs e)
+        private void _functionCaller_ResponseReceived(object? sender, SKClient.ResponseEventArgs e)
         {
             var chatEntry = $"Bot > {e.Response}";
             AddTextToRichTextBox(richTextBox1, chatEntry);
@@ -239,7 +239,7 @@ namespace SKFunctionCallingWinform
 
         private void label7_Click(object sender, EventArgs e)
         {
-                
+
         }
 
         private void usersListBox_Enter(object sender, EventArgs e)

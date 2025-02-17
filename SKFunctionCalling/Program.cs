@@ -4,6 +4,7 @@ using static DbHelper;
 using static RoleService;
 using static Console;
 using Microsoft.Extensions.Configuration;
+using SKLIb;
 
 public class Program
 {
@@ -35,21 +36,25 @@ Endpoint: {endpoint}
 ------------------------------------------------------------------------------------------
     ");
 
+        var instructions = @"You are the Role Membership Agent. You assist with user user access needs.
+You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
 
+If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
+";
 
         string prompt = "Hello. What is your name?";
-        IFunctionCalled[] services = { new RoleService(),
+        SKLIb.IFunctionCalled[] services = { new RoleService(),
                               new UserService(),
                               new UserRoleService(),
                               new NotificationService() };
-        var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment, services: services);
+        var functionCaller = new SKClient(endpoint, deployment, instructions, services);
         functionCaller.ResponseReceived += FunctionCaller_ResponseReceived;
         functionCaller.RateExceeded += FunctionCaller_RateExceeded;
         while (true)
         {
             ForegroundColor = ConsoleColor.DarkYellow;
 
-            await functionCaller.Run(prompt);
+            await functionCaller.RunAsync(prompt);
 
             ForegroundColor = ConsoleColor.White;
             Write("You > ");
@@ -63,7 +68,7 @@ Endpoint: {endpoint}
         }
     }
 
-    private static void FunctionCaller_RateExceeded(object? sender, FunctionCaller.RateExceededEventArgs e)
+    private static void FunctionCaller_RateExceeded(object? sender, SKClient.RateExceededEventArgs e)
     {
         int sec = 10;
         e.WaitTimeInSeconds = sec;
@@ -71,7 +76,7 @@ Endpoint: {endpoint}
 
     }
 
-    private static void FunctionCaller_ResponseReceived(object? sender, FunctionCaller.ResponseEventArgs e)
+    private static void FunctionCaller_ResponseReceived(object? sender, SKClient.ResponseEventArgs e)
     {
         var response = e.Response;
 

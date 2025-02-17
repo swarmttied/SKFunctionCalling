@@ -1,4 +1,5 @@
 using SKFunctionCalling;
+using SKLIb;
 using static SKFunctionCalling.DbHelper;
 using static SKFunctionCalling.RoleService;
 using static System.Configuration.ConfigurationManager;
@@ -30,7 +31,12 @@ internal static class Program
                               new UserService(),
                               new UserRoleService(),
                               new NotificationService() };
-        FunctionCaller functionCaller = new(AIendpoint:endpoint, AIdeployment:deployment, services:services);
+        var instructions = @"You are the Role Membership Agent. You assist with user user access needs.
+You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
+
+If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
+";
+        SKClient functionCaller = new(endpoint, deployment, instructions, services);
         var chatBanner =
  @$"-----------------------------------------------------------------------------------------------------
 This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.

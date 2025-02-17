@@ -47,8 +47,9 @@ namespace SKLIb
 
             _openAIPromptExecutionSettings = new();
 
-            if (Services != null)
+            if (services != null)
             {
+                Services = services;
                 foreach (var service in Services)
                     builder.Plugins.AddFromObject(service);
                 _openAIPromptExecutionSettings.ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions;
