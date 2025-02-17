@@ -11,13 +11,13 @@ namespace SKFunctionCalling;
 
 public class UserRole
 {
-    public string Username { get; set; }
-    public string Rolename { get; set; }
+    public required string Username { get; set; }
+    public required string Rolename { get; set; }
 }
 
 public class UserRoleService : IFunctionCalled
 {
-    public event EventHandler<FunctionCallEventArgs> FunctionCalled;
+    public event EventHandler<FunctionCallEventArgs>? FunctionCalled;
 
     [KernelFunction]
     public List<UserRole> ListUserRoles()
