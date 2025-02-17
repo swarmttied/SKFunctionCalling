@@ -30,58 +30,39 @@ namespace SKLIb
         public event EventHandler<ResponseEventArgs>? ResponseReceived;
         public event EventHandler<RateExceededEventArgs>? RateExceeded;
 
-        ChatHistory _chatHistory;
-        IChatCompletionService _chatService;
-        OpenAIPromptExecutionSettings _openAIPromptExecutionSettings;
-        readonly string _endpoint;
-        readonly string _deployment;
-        readonly string _instructions;
+        readonly ChatHistory _chatHistory;
+        readonly IChatCompletionService _chatService;
+        readonly OpenAIPromptExecutionSettings _openAIPromptExecutionSettings;
+        readonly Kernel _kernel;
 
 
         public SKClient(string endpoint, string deployment, string instructions, IFunctionCalled[]? services = null)
         {
-            _endpoint = endpoint;
-            _deployment = deployment;
-            _instructions = instructions;
-            Services = services;
-        }
+            var builder = Kernel.CreateBuilder();
+            builder.AddAzureOpenAIChatCompletion(
+                deploymentName: deployment,
+                endpoint: endpoint,
+                credentials: new AzureCliCredential());
 
-        Kernel _kernel;
-        private Kernel Kernel
-        {
-            get
+
+            _openAIPromptExecutionSettings = new();
+
+            if (Services != null)
             {
-                if (_kernel != null)
-                    return _kernel;
-
-                var builder = Kernel.CreateBuilder();
-                builder.AddAzureOpenAIChatCompletion(
-                    deploymentName: _deployment,
-                    endpoint: _endpoint,
-                    credentials: new DefaultAzureCredential());
-
-
-                _openAIPromptExecutionSettings = new();
-
-                if (Services != null)
-                {
-                    foreach (var service in Services)
-                        builder.Plugins.AddFromObject(service);
-                    _openAIPromptExecutionSettings.ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions;
-                }
-
-                _kernel = builder.Build();
-
-                _chatHistory = new ChatHistory();
-                if (_instructions != null)
-                {
-                    _chatHistory.AddSystemMessage(_instructions);
-                }
-                _chatService = _kernel.GetRequiredService<IChatCompletionService>();
-                return _kernel;
+                foreach (var service in Services)
+                    builder.Plugins.AddFromObject(service);
+                _openAIPromptExecutionSettings.ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions;
             }
-        }
 
+            _kernel = builder.Build();
+
+            _chatHistory = new ChatHistory();
+            if (instructions != null)
+            {
+                _chatHistory.AddSystemMessage(instructions);
+            }
+            _chatService = _kernel.GetRequiredService<IChatCompletionService>();
+        }
         public async Task RunAsync(string prompt)
         {
             _chatHistory.AddUserMessage(prompt);
@@ -94,7 +75,7 @@ namespace SKLIb
                     messageContents = await _chatService.GetChatMessageContentsAsync(
                         _chatHistory,
                         _openAIPromptExecutionSettings,
-                        kernel: Kernel);
+                        kernel: _kernel);
                     success = true;
                 }
                 catch (Exception ex)
