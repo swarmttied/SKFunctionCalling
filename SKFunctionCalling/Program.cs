@@ -4,19 +4,11 @@ using static DbHelper;
 using static RoleService;
 using static Console;
 using Microsoft.Extensions.Configuration;
-using System.Data;
-using System.Text;
 
 public class Program
 {
     public static async Task Main()
     {
-        var dbConStr = "Server=tcp:giobsql.database.windows.net,1433;Initial Catalog=BlueCorner;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
-        var schemaInfo = DbSchemaHelper.PrintDatabaseSchema(dbConStr);
-
-        string instructions = $"You are a database query converter. You convert the user input to SQL query by using the schema information below. Return only SQL. \n\n {schemaInfo}";
-
-
         var configuration = new ConfigurationBuilder()
            .SetBasePath(Directory.GetCurrentDirectory())
            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -45,13 +37,12 @@ Endpoint: {endpoint}
 
 
 
-        string prompt = "Hi. What can you do for me?";
-        IFunctionCalled[] services = { new RoleService(), 
-                              new UserService(), 
-                              new UserRoleService(), 
+        string prompt = "Hello. What is your name?";
+        IFunctionCalled[] services = { new RoleService(),
+                              new UserService(),
+                              new UserRoleService(),
                               new NotificationService() };
-        //var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment, services: services);
-        var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment, instructions: instructions);
+        var functionCaller = new FunctionCaller(AIendpoint: endpoint, AIdeployment: deployment, services: services);
         functionCaller.ResponseReceived += FunctionCaller_ResponseReceived;
         functionCaller.RateExceeded += FunctionCaller_RateExceeded;
         while (true)
@@ -65,7 +56,7 @@ Endpoint: {endpoint}
 
             prompt = ReadLine();
             if (string.IsNullOrWhiteSpace(prompt))
-                continue;           
+                continue;
 
             if (prompt.Trim().ToLower() == "exit")
                 break;
@@ -76,7 +67,7 @@ Endpoint: {endpoint}
     {
         int sec = 10;
         e.WaitTimeInSeconds = sec;
-        Console.WriteLine($"Rate limit exceeded. Retrying after {sec} seconds.");
+        WriteLine($"Rate limit exceeded. Retrying after {sec} seconds.");
 
     }
 
@@ -85,46 +76,8 @@ Endpoint: {endpoint}
         var response = e.Response;
 
         ForegroundColor = ConsoleColor.Green;
+        WriteLine($"Bot > {response}");
 
-        string qry = response.Trim('\n').Replace("```sql", "").Replace("```", "");
-        var dbConStr = "Server=tcp:giobsql.database.windows.net,1433;Initial Catalog=BlueCorner;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
-        try
-        {
-            WriteLine($"Bot > {response}");
-            DataTable tbl = DbSchemaHelper.RunQuery(dbConStr, qry);
-            string qryResult = ConvertToString(tbl);
-            ForegroundColor = ConsoleColor.DarkYellow;
-            WriteLine($"System > {qryResult}");
-        }
-        catch 
-        {
-            WriteLine($"Bot > {response}");
-        }
-    }
-
-    static string ConvertToString(DataTable dataTable)
-    {
-        if (dataTable.Rows.Count == 0)
-            return "Empty result";
-
-        var sb = new StringBuilder("| ");
-        foreach (DataColumn column in dataTable.Columns)
-        {
-            sb.Append($"{column.ColumnName} | ");
-        }
-        sb.AppendLine();
-
-        foreach (DataRow row in dataTable.Rows)
-        {
-            sb.Append("| ");
-            foreach (DataColumn column in dataTable.Columns)
-            {
-                sb.Append($"{row[column]} | ");
-            }
-            sb.AppendLine();
-        }
-        sb.Append($"\nRows: {dataTable.Rows.Count}\n");
-        return sb.ToString();
     }
 
     private static void ResetDb()
