@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKFunctionCallingWinform", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoleMembershipLib", "RoleMembetshipLib\RoleMembershipLib.csproj", "{784F4441-482B-46CD-904D-4354C51EA0B8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{4F0BACEC-3022-411E-88FB-B31915F1D0FF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKQueryGen", "SKQueryGen\SKQueryGen.csproj", "{519B01DB-FAF7-4751-BFCA-449A1370FD29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKLIb", "SKLIb\SKLIb.csproj", "{FBC466E1-6CB7-416E-90F3-E9D25AD3B581}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{992CA38C-D8D5-4597-B308-F140601A9C5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +55,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{784F4441-482B-46CD-904D-4354C51EA0B8} = {992CA38C-D8D5-4597-B308-F140601A9C5E}
+		{FBC466E1-6CB7-416E-90F3-E9D25AD3B581} = {992CA38C-D8D5-4597-B308-F140601A9C5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02B19268-E1C3-40EA-A632-BDAB6B189BCE}
