@@ -70,7 +70,7 @@ If no function in this application is called, tell the user the request is beyon
     {
         _chatHistory.AddUserMessage(prompt);
         bool success = false;
-        IReadOnlyList<ChatMessageContent> messageContents = null;
+        IReadOnlyList<ChatMessageContent>? messageContents = null;
         do
         {  try
             {
@@ -104,10 +104,13 @@ If no function in this application is called, tell the user the request is beyon
 
 
         string fullMessage = "";
-        foreach (var msg in messageContents)
-        {            
-            //Console.Write(msg.Content);
-            fullMessage += msg.Content;
+        if (messageContents != null)
+        {
+            foreach (var msg in messageContents)
+            {
+                //Console.Write(msg.Content);
+                fullMessage += msg.Content;
+            }
         }
 
         _chatHistory.AddAssistantMessage(fullMessage);
