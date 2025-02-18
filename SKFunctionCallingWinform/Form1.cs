@@ -188,7 +188,7 @@ namespace SKFunctionCallingWinform
         {
             var chatEntry = $"System > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
             AddTextToRichTextBox(richTextBox1, chatEntry);
-            ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Yellow);
+            ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Purple);
 
         }
 
@@ -222,7 +222,7 @@ namespace SKFunctionCallingWinform
             Invoke(() =>
             {
                 AddTextToRichTextBox(richTextBox1, chatEntry);
-                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Purple);
+                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Blue);
             });
 
         }
@@ -260,6 +260,13 @@ namespace SKFunctionCallingWinform
         private void usersInRoleListBox_Enter(object sender, EventArgs e)
         {
             AcceptButton = remnoveUserRoleButton;
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            // Autoscroll to the bottom of the richTextBox1
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            richTextBox1.ScrollToCaret();
         }
     }
 }

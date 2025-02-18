@@ -6,7 +6,7 @@ using static Console;
 using Microsoft.Extensions.Configuration;
 using SKLIb;
 
-public class Program
+public class SKFunctionCallingProgram
 {
     public static async Task Main()
     {
@@ -25,7 +25,10 @@ public class Program
         ForegroundColor = ConsoleColor.White;
 
         WriteLine(
-$@"---------------------------------------------------------------------------------------
+$@"
+------------------------------------------------------------------------------------------
+                                    Function Calling
+
 This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
 Function Calling allows you to call function in your applications using natural language.
 You may start by introducing youself or asking questions like ""What can you do for me?"" 
@@ -70,19 +73,15 @@ If no function in this application is called, tell the user the request is beyon
 
     private static void FunctionCaller_RateExceeded(object? sender, SKClient.RateExceededEventArgs e)
     {
-        int sec = 10;
-        e.WaitTimeInSeconds = sec;
-        WriteLine($"Rate limit exceeded. Retrying after {sec} seconds.");
-
+        var seconds = 10;
+        e.WaitTimeInSeconds = seconds;
+        WriteLine($"Rate limit exceeded. Retrying after {seconds} seconds.");
     }
 
     private static void FunctionCaller_ResponseReceived(object? sender, SKClient.ResponseEventArgs e)
     {
-        var response = e.Response;
-
         ForegroundColor = ConsoleColor.Green;
-        WriteLine($"Bot > {response}");
-
+        WriteLine($"Bot > {e.Response}");
     }
 
     private static void ResetDb()

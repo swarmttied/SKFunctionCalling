@@ -7,7 +7,7 @@ using static System.Configuration.ConfigurationManager;
 
 namespace SKFunctionCallingWinform;
 
-internal static class Program
+internal static class WinformProgram
 {
     /// <summary>
     ///  The main entry point for the application.
@@ -38,7 +38,10 @@ If no function in this application is called, tell the user the request is beyon
 ";
         SKClient functionCaller = new(endpoint, deployment, instructions, services);
         var chatBanner =
- @$"-----------------------------------------------------------------------------------------------------
+ @$"
+---------------------------------------------------------------------------------------------------------
+                                    Function Calling
+
 This is a simple implementation of Function Calling in Semantic Kernel using AzureOpenAI.
 Function Calling allows you to call function in your applications using natural language.
 You may start by introducing youself or asking questions like ""What can you do for me?"" 
