@@ -35,11 +35,11 @@ public class Program
         string deployment = configuration["deployment"] ?? "";
         string dbConStr = configuration["dbConStr"] ?? "";
 
-        _dbHelper = new SqlServerDbHelper(dbConStr);
-        string schemaInfo = _dbHelper.GetDbSchema(tableSchema: "SK");
+        ///_dbHelper = new SqlServerDbHelper(dbConStr);
+        //string schemaInfo = _dbHelper.GetDbSchema(tableSchema: "SK");
 
-        //_dbHelper = new SqliteDbHelper(DbHelper.GetDbConStr());
-        //string schemaInfo = _dbHelper.GetDbSchema();
+        _dbHelper = new SqliteDbHelper(DbHelper.GetDbConStr());
+        string schemaInfo = _dbHelper.GetDbSchema();
 
         string instructions = $"You are the Query Genarator for role membership. Your task is convert the user input to SQL query based on the database schema below. You ensure that the constraints and rules are followed to maintain data integrity. \n\n {schemaInfo}";
 
