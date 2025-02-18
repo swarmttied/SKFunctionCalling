@@ -12,7 +12,7 @@ namespace SKLib
             _dbConStr = dbConStr;
         }
 
-        public string GetDbSchema(string tableSchema = "main")
+        public string GetDbSchema(string tableSchema = "")
         {
             using var connection = new SqliteConnection(_dbConStr);
             connection.Open();

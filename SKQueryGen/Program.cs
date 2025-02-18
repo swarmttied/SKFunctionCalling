@@ -2,17 +2,24 @@
 
 
 using Microsoft.Extensions.Configuration;
+using SKFunctionCalling;
 using SKLib;
 using SKLIb;
 using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
 using static Console;
+using static SKFunctionCalling.DbHelper;
+using static SKFunctionCalling.RoleService;
 
 public class Program
 {
     public static async Task Main()
     {
+
+        ResetDb();
+        Console.WriteLine("DB is reset.");
+
         var program = new Program();
         await program.RunAsync();
     }
@@ -30,6 +37,9 @@ public class Program
 
         _dbHelper = new SqlServerDbHelper(dbConStr);
         string schemaInfo = _dbHelper.GetDbSchema(tableSchema: "SK");
+
+        //_dbHelper = new SqliteDbHelper(DbHelper.GetDbConStr());
+        //string schemaInfo = _dbHelper.GetDbSchema();
 
         string instructions = $"You are the Query Genarator for role membership. Your task is convert the user input to SQL query based on the database schema below. You ensure that the constraints and rules are followed to maintain data integrity. \n\n {schemaInfo}";
 
@@ -144,6 +154,18 @@ Endpoint: {endpoint}
         }
         sb.Append($"\nRows: {dataTable.Rows.Count}\n");
         return sb.ToString();
+    }
+
+    static void ResetDb()
+    {
+        CreateDbIfNotExist();
+        TruncateTables();
+        AddRole("Admin");
+        AddRole("Investigator");
+        AddRole("Auditor");
+        AddRole("Audit Manager");
+        AddRole("Dev");
+        AddRole("Tester");
     }
 }
 
