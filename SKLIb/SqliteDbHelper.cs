@@ -36,7 +36,7 @@ namespace SKLib
             StringBuilder sb = new();
             foreach (var tbl in tables)
             {
-                sb.Append($"{tableSchema}.{tbl} ");
+                sb.Append($"{tbl} ");
                 sb.Append(GetTableSchema(connection, tbl));
             }
 
