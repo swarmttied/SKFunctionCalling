@@ -50,7 +50,9 @@ public static class DbHelper
 
     public static string GetDbConStr()
     {
-        var dbPath = Path.Combine(AppContext.BaseDirectory, "RoleMembership.db");
+        var baseDir = AppContext.BaseDirectory;
+        var fourDirsUp = Path.GetFullPath(Path.Combine(baseDir, @"..\..\..\..\"));
+        var dbPath = Path.Combine(fourDirsUp, "RoleMembership.db");
         return $"Data Source={dbPath}";
     }
 

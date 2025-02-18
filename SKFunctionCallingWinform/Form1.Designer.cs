@@ -65,6 +65,7 @@
             richTextBox1.Size = new Size(834, 602);
             richTextBox1.TabIndex = 22;
             richTextBox1.Text = "";
+            richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // sendButton
             // 

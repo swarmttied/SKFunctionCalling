@@ -12,15 +12,16 @@ using static Console;
 using static SKFunctionCalling.DbHelper;
 using static SKFunctionCalling.RoleService;
 
-public class Program
+public class SKQueryGenProgram
 {
     public static async Task Main()
     {
-
+#if RESET
         ResetDb();
-        Console.WriteLine("DB is reset.");
+        WriteLine("DB is reset.");
+#endif
 
-        var program = new Program();
+        var program = new SKQueryGenProgram();
         await program.RunAsync();
     }
 
@@ -46,7 +47,10 @@ public class Program
         ForegroundColor = ConsoleColor.White;
 
         WriteLine(
-$@"---------------------------------------------------------------------------------------
+$@"
+------------------------------------------------------------------------------------------
+                                   Query Generator 
+
 This is a simple implementation of Semantic Kernel to translate natural language into SQL
 query and run it against a database. You may start with ""Tell me about the database"" 
 or ""Show me some commands""
