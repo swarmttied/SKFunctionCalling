@@ -43,10 +43,15 @@ public static class DbHelper
 
     public static IDbConnection GetDbConnection()
     {
-        var dbPath = Path.Combine(AppContext.BaseDirectory, "RoleMembership.db");
-        var connection = new SqliteConnection($"Data Source={dbPath}");
+        var connection = new SqliteConnection(GetDbConStr());
         connection.Open();
         return connection;
+    }
+
+    public static string GetDbConStr()
+    {
+        var dbPath = Path.Combine(AppContext.BaseDirectory, "RoleMembership.db");
+        return $"Data Source={dbPath}";
     }
 
     public static IDbDataParameter CreateParam(IDbCommand dbCommand, string name, object value)
