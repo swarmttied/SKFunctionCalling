@@ -15,7 +15,8 @@ namespace SKFunctionCallingWinform
         readonly ISKClient _queryGen;
         readonly IDbHelper _dbHelper;
         readonly string _chatBanner;
-        const string InitialPrompt = "Hi. Who are you and what can you do for me?";
+        readonly string _queryGenBanner;
+        const string InitialPrompt = "Who are you and what can you do for me?";
 
 
         public Form1(ISKClient functionCaller, string chatBanner, ISKClient queryGen, IDbHelper dbHelper, string queryGenBanner)
@@ -41,7 +42,7 @@ namespace SKFunctionCallingWinform
             _queryGen.ResponseReceived += queryGen_ResponseReceived;
 
             _dbHelper = dbHelper;
-
+            _queryGenBanner = queryGenBanner;
         }
 
 
@@ -55,6 +56,7 @@ namespace SKFunctionCallingWinform
             PopulateRolesListBox();
             RefreshUserList();
             richTextBox1.AppendText(_chatBanner + Environment.NewLine);
+            queryGenRTB.AppendText(_queryGenBanner + Environment.NewLine);
             await _functionCaller.RunAsync(InitialPrompt);
             await _queryGen.RunAsync(InitialPrompt);
             promptTextBox.Focus();
@@ -173,12 +175,7 @@ namespace SKFunctionCallingWinform
             {
                 MessageBox.Show($"Error removing user from role: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void promptTextBox_Enter(object sender, EventArgs e)
-        {
-            this.AcceptButton = sendButton;
-        }
+        }       
 
         private void listUsersButton_Click_1(object sender, EventArgs e)
         {
@@ -258,6 +255,11 @@ namespace SKFunctionCallingWinform
             ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Green);
         }
 
+        private void promptTextBox_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = sendButton;
+        }
+
         #endregion
 
         #region QueryGen
@@ -284,14 +286,36 @@ namespace SKFunctionCallingWinform
         private void queryGen_ResponseReceived(object? sender, SKClient.ResponseEventArgs e)
         {
             dataGridView1.DataSource = null;
-            if (e.SqlQueries.Any())
+
+            var chatEntry = $"Bot > {e.Response}";
+            AddTextToRichTextBox(queryGenRTB, chatEntry);
+            ChangeRichTextBoxColor(queryGenRTB, chatEntry, Color.Green);
+
+            if (e.SqlQueries.Any() == false)
+                return;
+
+            try
             {
                 foreach (var qry in e.SqlQueries)
                 {
                     DataTable tbl = _dbHelper.RunQuery(qry);
                     dataGridView1.DataSource = tbl;
                 }
+
             }
+            catch (Exception ex)
+            {
+                // Display only constraint errors
+                var errorEntry = $"System > ERROR! {ex.Message}";
+                AddTextToRichTextBox(queryGenRTB, errorEntry);
+                ChangeRichTextBoxColor(queryGenRTB, errorEntry, Color.Red);
+
+            }
+        }
+
+        private void queryGenPromptTextBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = queryGenSendButton;
         }
 
         #endregion
