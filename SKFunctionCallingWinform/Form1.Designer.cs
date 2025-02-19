@@ -373,6 +373,7 @@
             queryGenPromptTextBox.Name = "queryGenPromptTextBox";
             queryGenPromptTextBox.Size = new Size(713, 84);
             queryGenPromptTextBox.TabIndex = 30;
+            queryGenPromptTextBox.Enter += queryGenPromptTextBox_Enter;
             // 
             // dataGridView1
             // 
