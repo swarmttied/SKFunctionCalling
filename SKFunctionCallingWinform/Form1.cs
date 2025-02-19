@@ -1,19 +1,24 @@
 using SKFunctionCalling;
+using SKLib;
 using SKLIb;
+using System.Data;
 
 
 namespace SKFunctionCallingWinform
 {
     public partial class Form1 : Form
     {
-        private UserService userService;
-        private RoleService roleService;
-        private UserRoleService userRoleService;
-        private SKClient _functionCaller;
+        readonly UserService userService;
+        readonly RoleService roleService;
+        readonly UserRoleService userRoleService;
+        readonly ISKClient _functionCaller;
+        readonly ISKClient _queryGen;
+        readonly IDbHelper _dbHelper;
         readonly string _chatBanner;
+        const string InitialPrompt = "Hi. Who are you and what can you do for me?";
 
 
-        public Form1(SKClient functionCaller, string chatBanner)
+        public Form1(ISKClient functionCaller, string chatBanner, ISKClient queryGen, IDbHelper dbHelper, string queryGenBanner)
         {
             InitializeComponent();
             _chatBanner = chatBanner;
@@ -32,7 +37,13 @@ namespace SKFunctionCallingWinform
             userRoleService = new UserRoleService();
             userRoleService.FunctionCalled += Form_FunctionCalled;
 
+            _queryGen = queryGen;
+            _queryGen.ResponseReceived += queryGen_ResponseReceived;
+
+            _dbHelper = dbHelper;
+
         }
+
 
         private void Form_FunctionCalled(object? sender, FunctionCallEventArgs e)
         {
@@ -44,10 +55,12 @@ namespace SKFunctionCallingWinform
             PopulateRolesListBox();
             RefreshUserList();
             richTextBox1.AppendText(_chatBanner + Environment.NewLine);
-            await _functionCaller.RunAsync("Hello. What is your name?");
+            await _functionCaller.RunAsync(InitialPrompt);
+            await _queryGen.RunAsync(InitialPrompt);
             promptTextBox.Focus();
         }
 
+        #region Manual Form
 
         private void addUsersButton_Click(object sender, EventArgs e)
         {
@@ -76,8 +89,6 @@ namespace SKFunctionCallingWinform
             usersListBox.DataSource = users;
             usersListBox.DisplayMember = "Username";
         }
-
-
 
         private void PopulateRolesListBox()
         {
@@ -147,7 +158,6 @@ namespace SKFunctionCallingWinform
                 MessageBox.Show($"Error removing user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void remnoveUserRoleButton_Click(object sender, EventArgs e)
         {
             try
@@ -163,6 +173,55 @@ namespace SKFunctionCallingWinform
             {
                 MessageBox.Show($"Error removing user from role: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void promptTextBox_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = sendButton;
+        }
+
+        private void listUsersButton_Click_1(object sender, EventArgs e)
+        {
+            RefreshUserList();
+        }
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void usersListBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = getUserButton;
+        }
+
+        private void usernameTextBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = addUsersButton;
+        }
+
+        private void userRoleUsernameTextBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = addUserRoleButton;
+        }
+
+        private void usersInRoleListBox_Enter(object sender, EventArgs e)
+        {
+            AcceptButton = remnoveUserRoleButton;
+        }
+
+        #endregion
+
+        #region Function Calling
+
+        private void Svc_FunctionCalled(object? sender, FunctionCallEventArgs e)
+        {
+            var chatEntry = $"Function: {e.FunctionName}";
+            Invoke(() =>
+            {
+                AddTextToRichTextBox(richTextBox1, chatEntry);
+                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Blue);
+            });
+
         }
 
         private async void sendButton_ClickAsync(object sender, EventArgs e)
@@ -199,10 +258,48 @@ namespace SKFunctionCallingWinform
             ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Green);
         }
 
+        #endregion
+
+        #region QueryGen
+
+        private async void queryGenSendButton_ClickAsync(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(queryGenPromptTextBox.Text))
+            {
+                string input = queryGenPromptTextBox.Text;
+
+                var prompt = $"You > {input}";
+                queryGenPromptTextBox.Clear();
+
+                AddTextToRichTextBox(queryGenRTB, prompt);
+                ChangeRichTextBoxColor(queryGenRTB, prompt, Color.Black);
+
+                await _queryGen.RunAsync(input);
+
+                queryGenPromptTextBox.Clear();
+                queryGenPromptTextBox.Focus();
+            }
+        }
+
+        private void queryGen_ResponseReceived(object? sender, SKClient.ResponseEventArgs e)
+        {
+            dataGridView1.DataSource = null;
+            if (e.SqlQueries.Any())
+            {
+                foreach (var qry in e.SqlQueries)
+                {
+                    DataTable tbl = _dbHelper.RunQuery(qry);
+                    dataGridView1.DataSource = tbl;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Helpers and Common
 
         private void ChangeRichTextBoxColor(RichTextBox richTextBox, string text, Color color)
         {
-
             int startIndex = richTextBox.Text.IndexOf(text);
             if (startIndex != -1)
             {
@@ -211,62 +308,21 @@ namespace SKFunctionCallingWinform
                 richTextBox.DeselectAll();
             }
         }
+
         private void AddTextToRichTextBox(RichTextBox richTextBox, string text)
         {
             richTextBox.AppendText(text + Environment.NewLine);
         }
 
-        private void Svc_FunctionCalled(object? sender, FunctionCallEventArgs e)
+
+        private void RichTextBox_TextChanged(object sender, EventArgs e)
         {
-            var chatEntry = $"Function: {e.FunctionName}";
-            Invoke(() =>
-            {
-                AddTextToRichTextBox(richTextBox1, chatEntry);
-                ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Blue);
-            });
-
-        }
-
-        private void promptTextBox_Enter(object sender, EventArgs e)
-        {
-            this.AcceptButton = sendButton;
-        }
-
-        private void listUsersButton_Click_1(object sender, EventArgs e)
-        {
-            RefreshUserList();
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void usersListBox_Enter(object sender, EventArgs e)
-        {
-            AcceptButton = getUserButton;
-        }
-
-        private void usernameTextBox_Enter(object sender, EventArgs e)
-        {
-            AcceptButton = addUsersButton;
-        }
-
-        private void userRoleUsernameTextBox_Enter(object sender, EventArgs e)
-        {
-            AcceptButton = addUserRoleButton;
-        }
-
-        private void usersInRoleListBox_Enter(object sender, EventArgs e)
-        {
-            AcceptButton = remnoveUserRoleButton;
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
+            RichTextBox richTextBox = (RichTextBox)sender;
             // Autoscroll to the bottom of the richTextBox1
-            richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            richTextBox1.ScrollToCaret();
+            richTextBox.SelectionStart = richTextBox1.Text.Length;
+            richTextBox.ScrollToCaret();
         }
+
+        #endregion
     }
 }

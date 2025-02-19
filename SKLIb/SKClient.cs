@@ -2,6 +2,7 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
+using System.Text.RegularExpressions;
 
 namespace SKLIb
 {
@@ -20,6 +21,7 @@ namespace SKLIb
         public class ResponseEventArgs : EventArgs
         {
             public string? Response { get; set; }
+            public string[] SqlQueries { get; set; } = Array.Empty<string>();
         }
 
         public class RateExceededEventArgs : EventArgs
@@ -114,9 +116,21 @@ namespace SKLIb
 
             _chatHistory.AddAssistantMessage(fullMessage);
 
-            ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage });
+            ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage, SqlQueries=ExtractSql(fullMessage) });
         }
 
         public IFunctionCalled[]? Services { get; private set; }
+
+        static string[] ExtractSql(string response)
+        {
+            string pattern = @"(?<=```sql)(.*?)(?=```)";
+            var matches = Regex.Matches(response, pattern, RegexOptions.Singleline);
+            string[] sqlQueries = new string[matches.Count];
+            for (int i = 0; i < matches.Count; i++)
+            {
+                sqlQueries[i] = matches[i].Value.Trim();
+            }
+            return sqlQueries;
+        }
     }
 }

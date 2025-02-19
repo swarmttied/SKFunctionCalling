@@ -54,24 +54,30 @@
             label9 = new Label();
             calledFunctionsListBox = new ListBox();
             label6 = new Label();
+            label10 = new Label();
+            queryGenRTB = new RichTextBox();
+            queryGenSendButton = new Button();
+            queryGenPromptTextBox = new TextBox();
+            dataGridView1 = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // richTextBox1
             // 
-            richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             richTextBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             richTextBox1.Location = new Point(593, 12);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(834, 602);
+            richTextBox1.Size = new Size(834, 659);
             richTextBox1.TabIndex = 22;
             richTextBox1.Text = "";
-            richTextBox1.TextChanged += richTextBox1_TextChanged;
+            richTextBox1.TextChanged += RichTextBox_TextChanged;
             // 
             // sendButton
             // 
-            sendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            sendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             sendButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            sendButton.Location = new Point(1310, 642);
+            sendButton.Location = new Point(1311, 698);
             sendButton.Name = "sendButton";
             sendButton.Size = new Size(117, 84);
             sendButton.TabIndex = 25;
@@ -81,9 +87,9 @@
             // 
             // promptTextBox
             // 
-            promptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            promptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             promptTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            promptTextBox.Location = new Point(593, 641);
+            promptTextBox.Location = new Point(593, 698);
             promptTextBox.Multiline = true;
             promptTextBox.Name = "promptTextBox";
             promptTextBox.Size = new Size(711, 84);
@@ -295,10 +301,10 @@
             // 
             // label9
             // 
-            label9.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label9.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(593, 617);
+            label9.Location = new Point(593, 674);
             label9.Name = "label9";
             label9.Size = new Size(65, 21);
             label9.TabIndex = 23;
@@ -324,11 +330,72 @@
             label6.TabIndex = 27;
             label6.Text = "Called Functions";
             // 
+            // label10
+            // 
+            label10.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(1446, 674);
+            label10.Name = "label10";
+            label10.Size = new Size(65, 21);
+            label10.TabIndex = 29;
+            label10.Text = "Pro&mpt";
+            // 
+            // queryGenRTB
+            // 
+            queryGenRTB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            queryGenRTB.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            queryGenRTB.Location = new Point(1446, 12);
+            queryGenRTB.Name = "queryGenRTB";
+            queryGenRTB.Size = new Size(836, 462);
+            queryGenRTB.TabIndex = 28;
+            queryGenRTB.Text = "";
+            queryGenRTB.TextChanged += RichTextBox_TextChanged;
+            // 
+            // queryGenSendButton
+            // 
+            queryGenSendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            queryGenSendButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            queryGenSendButton.Location = new Point(2166, 698);
+            queryGenSendButton.Name = "queryGenSendButton";
+            queryGenSendButton.Size = new Size(117, 84);
+            queryGenSendButton.TabIndex = 31;
+            queryGenSendButton.Text = "Send";
+            queryGenSendButton.UseVisualStyleBackColor = true;
+            queryGenSendButton.Click += queryGenSendButton_ClickAsync;
+            // 
+            // queryGenPromptTextBox
+            // 
+            queryGenPromptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            queryGenPromptTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            queryGenPromptTextBox.Location = new Point(1446, 698);
+            queryGenPromptTextBox.Multiline = true;
+            queryGenPromptTextBox.Name = "queryGenPromptTextBox";
+            queryGenPromptTextBox.Size = new Size(713, 84);
+            queryGenPromptTextBox.TabIndex = 30;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(1446, 480);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.Size = new Size(834, 191);
+            dataGridView1.TabIndex = 32;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1439, 737);
+            ClientSize = new Size(2294, 794);
+            Controls.Add(dataGridView1);
+            Controls.Add(label10);
+            Controls.Add(queryGenRTB);
+            Controls.Add(queryGenSendButton);
+            Controls.Add(queryGenPromptTextBox);
             Controls.Add(label6);
             Controls.Add(calledFunctionsListBox);
             Controls.Add(label9);
@@ -355,9 +422,12 @@
             Controls.Add(usersListBox);
             Controls.Add(removeUsersButton);
             Controls.Add(addUsersButton);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            MaximizeBox = false;
             Name = "Form1";
             Text = "Function Calling";
             Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -390,5 +460,10 @@
         private Label label9;
         private ListBox calledFunctionsListBox;
         private Label label6;
+        private Label label10;
+        private RichTextBox queryGenRTB;
+        private Button queryGenSendButton;
+        private TextBox queryGenPromptTextBox;
+        private DataGridView dataGridView1;
     }
 }

@@ -99,7 +99,7 @@ Endpoint: {endpoint}
         ForegroundColor = ConsoleColor.Green;
         WriteLine($"Bot > {response}");
 
-        string[] sqlQueries = ExtractSql(response);
+        string[] sqlQueries = e.SqlQueries;
         try
         {
             foreach (var qry in sqlQueries)
@@ -123,17 +123,17 @@ Endpoint: {endpoint}
 
     #endregion
 
-    static string[] ExtractSql(string response)
-    {
-        string pattern = @"(?<=```sql)(.*?)(?=```)";
-        var matches = Regex.Matches(response, pattern, RegexOptions.Singleline);
-        string[] sqlQueries = new string[matches.Count];
-        for (int i = 0; i < matches.Count; i++)
-        {
-            sqlQueries[i] = matches[i].Value.Trim();
-        }
-        return sqlQueries;
-    }
+    //static string[] ExtractSql(string response)
+    //{
+    //    string pattern = @"(?<=```sql)(.*?)(?=```)";
+    //    var matches = Regex.Matches(response, pattern, RegexOptions.Singleline);
+    //    string[] sqlQueries = new string[matches.Count];
+    //    for (int i = 0; i < matches.Count; i++)
+    //    {
+    //        sqlQueries[i] = matches[i].Value.Trim();
+    //    }
+    //    return sqlQueries;
+    //}
 
     static string ConvertToString(DataTable dataTable)
     {
