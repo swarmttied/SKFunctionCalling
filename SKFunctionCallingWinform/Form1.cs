@@ -176,7 +176,7 @@ namespace SKFunctionCallingWinform
             {
                 MessageBox.Show($"Error removing user from role: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }       
+        }
 
         private void listUsersButton_Click_1(object sender, EventArgs e)
         {
@@ -205,6 +205,10 @@ namespace SKFunctionCallingWinform
         private void usersInRoleListBox_Enter(object sender, EventArgs e)
         {
             AcceptButton = remnoveUserRoleButton;
+        }
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            calledFunctionsListBox.Items.Clear();
         }
 
         #endregion
@@ -350,5 +354,6 @@ namespace SKFunctionCallingWinform
         }
 
         #endregion
+       
     }
 }

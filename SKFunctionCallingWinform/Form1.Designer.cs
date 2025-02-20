@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             richTextBox1 = new RichTextBox();
             sendButton = new Button();
             promptTextBox = new TextBox();
@@ -59,6 +61,7 @@
             queryGenSendButton = new Button();
             queryGenPromptTextBox = new TextBox();
             dataGridView1 = new DataGridView();
+            clearButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -312,12 +315,13 @@
             // 
             // calledFunctionsListBox
             // 
+            calledFunctionsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             calledFunctionsListBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             calledFunctionsListBox.FormattingEnabled = true;
             calledFunctionsListBox.ItemHeight = 21;
             calledFunctionsListBox.Location = new Point(12, 553);
             calledFunctionsListBox.Name = "calledFunctionsListBox";
-            calledFunctionsListBox.Size = new Size(274, 172);
+            calledFunctionsListBox.Size = new Size(274, 235);
             calledFunctionsListBox.TabIndex = 26;
             // 
             // label6
@@ -380,18 +384,46 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.Location = new Point(1446, 480);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.Size = new Size(834, 191);
             dataGridView1.TabIndex = 32;
             // 
+            // clearButton
+            // 
+            clearButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            clearButton.Location = new Point(292, 754);
+            clearButton.Name = "clearButton";
+            clearButton.Size = new Size(94, 34);
+            clearButton.TabIndex = 33;
+            clearButton.Text = "Clear";
+            clearButton.UseVisualStyleBackColor = true;
+            clearButton.Click += clearButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2294, 794);
+            Controls.Add(clearButton);
             Controls.Add(dataGridView1);
             Controls.Add(label10);
             Controls.Add(queryGenRTB);
@@ -466,5 +498,6 @@
         private Button queryGenSendButton;
         private TextBox queryGenPromptTextBox;
         private DataGridView dataGridView1;
+        private Button clearButton;
     }
 }
