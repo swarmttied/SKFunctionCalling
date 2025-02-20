@@ -17,9 +17,10 @@ namespace SKFunctionCallingWinform
         readonly string _chatBanner;
         readonly string _queryGenBanner;
         const string InitialPrompt = "Who are you and what can you do for me?";
+        const int RateExceededWaitTimeInSec = 5;
 
 
-        public Form1(ISKClient functionCaller, string chatBanner, ISKClient queryGen, IDbHelper dbHelper, string queryGenBanner)
+        public Form1(ISKClient functionCaller, IFunctionCalled[] services, string chatBanner, ISKClient queryGen, IDbHelper dbHelper, string queryGenBanner)
         {
             InitializeComponent();
             _chatBanner = chatBanner;
@@ -28,7 +29,7 @@ namespace SKFunctionCallingWinform
             _functionCaller.ResponseReceived += _functionCaller_ResponseReceived;
             _functionCaller.RateExceeded += _functionCaller_RateExceeded;
 
-            foreach (IFunctionCalled svc in functionCaller.Services)
+            foreach (IFunctionCalled svc in services)
             {
                 svc.FunctionCalled += Svc_FunctionCalled;
             }
@@ -242,7 +243,8 @@ namespace SKFunctionCallingWinform
 
         private void _functionCaller_RateExceeded(object? sender, SKClient.RateExceededEventArgs e)
         {
-            var chatEntry = $"System > Rate limit exceeded. Retrying after {e.WaitTimeInSeconds} seconds.";
+            e.WaitTimeInSeconds = RateExceededWaitTimeInSec;
+            var chatEntry = $"System > Rate limit exceeded. Retrying after {RateExceededWaitTimeInSec} seconds.";
             AddTextToRichTextBox(richTextBox1, chatEntry);
             ChangeRichTextBoxColor(richTextBox1, chatEntry, Color.Purple);
 

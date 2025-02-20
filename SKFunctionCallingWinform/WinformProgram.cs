@@ -52,8 +52,9 @@ Endpoint: {endpoint}
    Model: {deployment}
 --------------------------------------------------------------------------------------------------------";
 
-        string dbConStr = AppSettings["dbConStr"];        
-        SqlServerDbHelper dbHelper = new(dbConStr);
+        string dbConStr = AppSettings["dbConStr"];
+        //SqlServerDbHelper dbHelper = new(dbConStr);
+        SqliteDbHelper dbHelper = new(DbHelper.GetDbConStr());
         var queryGenInstructions = GetQueryGenInstructions(dbHelper);
         SKClient queryGen = new(endpoint, deployment, queryGenInstructions);
         var queryGenBanner =
@@ -69,14 +70,13 @@ Endpoint: {endpoint}
    Model: {deployment}
 ------------------------------------------------------------------------------------------
     ";
-        Application.Run(new Form1(functionCaller ,chatBanner, queryGen, dbHelper, queryGenBanner));
+        Application.Run(new Form1(functionCaller, services, chatBanner, queryGen, dbHelper, queryGenBanner));
     }
 
     static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
     {
         Exception ex = (Exception)e.ExceptionObject;
         MessageBox.Show($"Unhandled exception: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        // Log the exception or handle it as needed
     }
 
     static void ResetDb()

@@ -8,10 +8,9 @@ namespace SKLIb
 {
     public interface ISKClient
     {
-        IFunctionCalled[]? Services { get; }
-
         event EventHandler<SKClient.RateExceededEventArgs>? RateExceeded;
         event EventHandler<SKClient.ResponseEventArgs>? ResponseReceived;
+        event EventHandler<FunctionCallEventArgs>? FunctionCalled;
 
         Task RunAsync(string prompt);
     }
@@ -31,6 +30,7 @@ namespace SKLIb
 
         public event EventHandler<ResponseEventArgs>? ResponseReceived;
         public event EventHandler<RateExceededEventArgs>? RateExceeded;
+        public event EventHandler<FunctionCallEventArgs>? FunctionCalled;
 
         readonly ChatHistory _chatHistory;
         readonly IChatCompletionService _chatService;
@@ -38,7 +38,7 @@ namespace SKLIb
         readonly Kernel _kernel;
 
 
-        public SKClient(string endpoint, string deployment, string instructions, IFunctionCalled[]? services = null)
+        public SKClient(string endpoint, string deployment, string instructions, object[] services = null)
         {
             var builder = Kernel.CreateBuilder();
             builder.AddAzureOpenAIChatCompletion(
@@ -51,8 +51,7 @@ namespace SKLIb
 
             if (services != null)
             {
-                Services = services;
-                foreach (var service in Services)
+                foreach (var service in services)
                     builder.Plugins.AddFromObject(service);
                 _openAIPromptExecutionSettings.ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions;
             }
@@ -118,8 +117,6 @@ namespace SKLIb
 
             ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage, SqlQueries=ExtractSql(fullMessage) });
         }
-
-        public IFunctionCalled[]? Services { get; private set; }
 
         static string[] ExtractSql(string response)
         {
