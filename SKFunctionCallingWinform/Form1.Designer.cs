@@ -62,27 +62,35 @@
             queryGenPromptTextBox = new TextBox();
             dataGridView1 = new DataGridView();
             clearButton = new Button();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            tableLayoutPanel4 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
             // richTextBox1
             // 
-            richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            richTextBox1.Dock = DockStyle.Fill;
             richTextBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            richTextBox1.Location = new Point(593, 12);
+            richTextBox1.Location = new Point(3, 3);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(834, 659);
+            richTextBox1.Size = new Size(774, 665);
             richTextBox1.TabIndex = 22;
             richTextBox1.Text = "";
             richTextBox1.TextChanged += RichTextBox_TextChanged;
             // 
             // sendButton
             // 
-            sendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            sendButton.Dock = DockStyle.Fill;
             sendButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            sendButton.Location = new Point(1311, 698);
+            sendButton.Location = new Point(654, 3);
             sendButton.Name = "sendButton";
-            sendButton.Size = new Size(117, 84);
+            sendButton.Size = new Size(117, 88);
             sendButton.TabIndex = 25;
             sendButton.Text = "Send";
             sendButton.UseVisualStyleBackColor = true;
@@ -90,12 +98,12 @@
             // 
             // promptTextBox
             // 
-            promptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            promptTextBox.Dock = DockStyle.Fill;
             promptTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            promptTextBox.Location = new Point(593, 698);
+            promptTextBox.Location = new Point(3, 3);
             promptTextBox.Multiline = true;
             promptTextBox.Name = "promptTextBox";
-            promptTextBox.Size = new Size(711, 84);
+            promptTextBox.Size = new Size(645, 88);
             promptTextBox.TabIndex = 24;
             promptTextBox.Enter += promptTextBox_Enter;
             // 
@@ -307,7 +315,7 @@
             label9.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(593, 674);
+            label9.Location = new Point(3, 671);
             label9.Name = "label9";
             label9.Size = new Size(65, 21);
             label9.TabIndex = 23;
@@ -339,7 +347,7 @@
             label10.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(1446, 674);
+            label10.Location = new Point(783, 671);
             label10.Name = "label10";
             label10.Size = new Size(65, 21);
             label10.TabIndex = 29;
@@ -349,20 +357,20 @@
             // 
             queryGenRTB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             queryGenRTB.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            queryGenRTB.Location = new Point(1446, 12);
+            queryGenRTB.Location = new Point(3, 3);
             queryGenRTB.Name = "queryGenRTB";
-            queryGenRTB.Size = new Size(836, 462);
+            queryGenRTB.Size = new Size(768, 469);
             queryGenRTB.TabIndex = 28;
             queryGenRTB.Text = "";
             queryGenRTB.TextChanged += RichTextBox_TextChanged;
             // 
             // queryGenSendButton
             // 
-            queryGenSendButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            queryGenSendButton.Dock = DockStyle.Fill;
             queryGenSendButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            queryGenSendButton.Location = new Point(2166, 698);
+            queryGenSendButton.Location = new Point(654, 3);
             queryGenSendButton.Name = "queryGenSendButton";
-            queryGenSendButton.Size = new Size(117, 84);
+            queryGenSendButton.Size = new Size(117, 88);
             queryGenSendButton.TabIndex = 31;
             queryGenSendButton.Text = "Send";
             queryGenSendButton.UseVisualStyleBackColor = true;
@@ -370,12 +378,12 @@
             // 
             // queryGenPromptTextBox
             // 
-            queryGenPromptTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            queryGenPromptTextBox.Dock = DockStyle.Fill;
             queryGenPromptTextBox.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            queryGenPromptTextBox.Location = new Point(1446, 698);
+            queryGenPromptTextBox.Location = new Point(3, 3);
             queryGenPromptTextBox.Multiline = true;
             queryGenPromptTextBox.Name = "queryGenPromptTextBox";
-            queryGenPromptTextBox.Size = new Size(713, 84);
+            queryGenPromptTextBox.Size = new Size(645, 88);
             queryGenPromptTextBox.TabIndex = 30;
             queryGenPromptTextBox.Enter += queryGenPromptTextBox_Enter;
             // 
@@ -383,7 +391,6 @@
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -401,16 +408,17 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.Location = new Point(1446, 480);
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(3, 478);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(834, 191);
+            dataGridView1.Size = new Size(768, 184);
             dataGridView1.TabIndex = 32;
             // 
             // clearButton
             // 
             clearButton.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            clearButton.Location = new Point(292, 754);
+            clearButton.Location = new Point(292, 553);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(94, 34);
             clearButton.TabIndex = 33;
@@ -418,27 +426,85 @@
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
             // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(label9, 0, 1);
+            tableLayoutPanel1.Controls.Add(richTextBox1, 0, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
+            tableLayoutPanel1.Controls.Add(label10, 1, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 0);
+            tableLayoutPanel1.Location = new Point(561, 2);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
+            tableLayoutPanel1.Size = new Size(1560, 792);
+            tableLayoutPanel1.TabIndex = 34;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel2.Controls.Add(sendButton, 1, 0);
+            tableLayoutPanel2.Controls.Add(promptTextBox, 0, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(3, 695);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(774, 94);
+            tableLayoutPanel2.TabIndex = 26;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 2;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel3.Controls.Add(queryGenPromptTextBox, 0, 0);
+            tableLayoutPanel3.Controls.Add(queryGenSendButton, 1, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(783, 695);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(774, 94);
+            tableLayoutPanel3.TabIndex = 30;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 1;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.Controls.Add(dataGridView1, 0, 1);
+            tableLayoutPanel4.Controls.Add(queryGenRTB, 0, 0);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(783, 3);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 2;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 71.42857F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 28.5714283F));
+            tableLayoutPanel4.Size = new Size(774, 665);
+            tableLayoutPanel4.TabIndex = 31;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(2294, 794);
+            ClientSize = new Size(2124, 800);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(clearButton);
-            Controls.Add(dataGridView1);
-            Controls.Add(label10);
-            Controls.Add(queryGenRTB);
-            Controls.Add(queryGenSendButton);
-            Controls.Add(queryGenPromptTextBox);
             Controls.Add(label6);
             Controls.Add(calledFunctionsListBox);
-            Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label4);
             Controls.Add(listUsersButton);
-            Controls.Add(richTextBox1);
-            Controls.Add(sendButton);
-            Controls.Add(promptTextBox);
             Controls.Add(getUserButton);
             Controls.Add(usersInRoleListBox);
             Controls.Add(roleCombo);
@@ -455,12 +521,18 @@
             Controls.Add(usersListBox);
             Controls.Add(removeUsersButton);
             Controls.Add(addUsersButton);
-            FormBorderStyle = FormBorderStyle.Fixed3D;
-            MaximizeBox = false;
+            MinimumSize = new Size(2140, 839);
             Name = "Form1";
             Text = "Function Calling";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -499,5 +571,9 @@
         private TextBox queryGenPromptTextBox;
         private DataGridView dataGridView1;
         private Button clearButton;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private TableLayoutPanel tableLayoutPanel3;
+        private TableLayoutPanel tableLayoutPanel4;
     }
 }
