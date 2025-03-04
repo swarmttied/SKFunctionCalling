@@ -50,11 +50,12 @@ namespace SKFunctionCallingWinform
         private void Form_FunctionCalled(object? sender, FunctionCallEventArgs e)
         {
             calledFunctionsListBox.Items.Add(e.FunctionName);
+            calledFunctionsListBox.AutoScrollToBottom();
         }
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            PopulateRolesListBox();
+            PopulateRolesComboBox();
             RefreshUserList();
             richTextBox1.AppendText(_chatBanner + Environment.NewLine);
             queryGenRTB.AppendText(_queryGenBanner + Environment.NewLine);
@@ -91,9 +92,10 @@ namespace SKFunctionCallingWinform
             var users = userService.ListUsers();
             usersListBox.DataSource = users;
             usersListBox.DisplayMember = "Username";
+            usersListBox.AutoScrollToBottom();
         }
 
-        private void PopulateRolesListBox()
+        private void PopulateRolesComboBox()
         {
             var roles = roleService.ListRoles();
             roleCombo.DataSource = roles;
@@ -128,6 +130,7 @@ namespace SKFunctionCallingWinform
             var users = userRoleService.GetUsersInRole(role.Name);
             usersInRoleListBox.DataSource = users;
             usersInRoleListBox.DisplayMember = "Username";
+            usersInRoleListBox.AutoScrollToBottom();
         }
 
         private void addUserRoleButton_Click(object sender, EventArgs e)
@@ -354,6 +357,6 @@ namespace SKFunctionCallingWinform
         }
 
         #endregion
-       
+
     }
 }
