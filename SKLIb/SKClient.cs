@@ -84,8 +84,8 @@ namespace SKLIb
                 {
                     if (ex.Message.Contains("exceeded"))
                     {
-                        //Console.WriteLine("Rate limit exceeded. Retrying after 30 seconds.");
-                        var args = new RateExceededEventArgs { WaitTimeInSeconds = 30 };
+                        var waitTime = GetSecondsToWait(ex.Message);     
+                        var args = new RateExceededEventArgs { WaitTimeInSeconds = waitTime };
                         RateExceeded?.Invoke(this, args);
                         Thread.Sleep(TimeSpan.FromSeconds(args.WaitTimeInSeconds));
                     }
@@ -128,6 +128,13 @@ namespace SKLIb
                 sqlQueries[i] = matches[i].Value.Trim();
             }
             return sqlQueries;
+        }
+
+        static int GetSecondsToWait(string rateExeededMessage)
+        {
+            string pattern = @"(?<=Try again in )\d+(?= seconds\.)";
+            var match = Regex.Match(rateExeededMessage, pattern);
+            return match.Success ? int.Parse(match.Value) : 30;
         }
     }
 }
