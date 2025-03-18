@@ -1,6 +1,8 @@
 ﻿using Microsoft.SemanticKernel;
 using SKLIb;
 using static System.Console;
+using System.ComponentModel;
+
 
 namespace SKFunctionCalling;
 
@@ -85,6 +87,7 @@ public class UserRoleService : IFunctionCalled
     }
 
     [KernelFunction]
+    [Description("Ask confirmation first before committing this action but make it short.")]
     public void RemoveUserFromRole(string username, string roleName)
     {
         WriteLine($"Function: {nameof(RemoveUserFromRole)}");
