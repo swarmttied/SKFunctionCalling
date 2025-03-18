@@ -50,7 +50,7 @@ public class UserRoleService : IFunctionCalled
                         SELECT u.* FROM Users u
                         JOIN UserRoles ur ON u.Username = ur.Username
                         JOIN Roles r ON r.Rolename = ur.Rolename
-                        WHERE r.Rolename = @RoleName
+                        WHERE LOWER(r.Rolename) = LOWER(@RoleName)
                     ";
         command.Parameters.Add(DbHelper.CreateParam(command, "@RoleName", roleName));
         using var reader = command.ExecuteReader();
@@ -94,8 +94,8 @@ public class UserRoleService : IFunctionCalled
         var command = connection.CreateCommand();
         command.CommandText = @"
                         DELETE FROM UserRoles
-                        WHERE Username = @Username
-                        AND Rolename = @Rolename
+                        WHERE LOWER(Username) = LOWER(@Username)
+                        AND LOWER(Rolename) = LOWER(@Rolename)
                     ";
         command.Parameters.Add(DbHelper.CreateParam(command, "@Username", username));
         command.Parameters.Add(DbHelper.CreateParam(command, "@Rolename", roleName));
