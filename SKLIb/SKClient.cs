@@ -1,8 +1,12 @@
-﻿using Azure.Identity;
+﻿using System.Text.RegularExpressions;
+using Azure.AI.OpenAI;
+using Azure.Identity;
+using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using System.Text.RegularExpressions;
 
 namespace SKLIb
 {
@@ -40,11 +44,13 @@ namespace SKLIb
 
         public SKClient(string endpoint, string deployment, string instructions, object[] services = null)
         {
+            var credential = new AzureCliCredential();
+
             var builder = Kernel.CreateBuilder();
             builder.AddAzureOpenAIChatCompletion(
                 deploymentName: deployment,
                 endpoint: endpoint,
-                credentials: new AzureCliCredential());
+                credentials: credential);
 
 
             _openAIPromptExecutionSettings = new();
@@ -64,6 +70,16 @@ namespace SKLIb
                 _chatHistory.AddSystemMessage(instructions);
             }
             _chatService = _kernel.GetRequiredService<IChatCompletionService>();
+
+
+            //var client = new AzureOpenAIClient(new Uri(endpoint), credential);
+            //var chatClient = client.GetChatClient(deployment).AsIChatClient();
+            ////var aiTools = services.Select(o=>o).OfType<AITool>();
+            //var functionSources = services.Select(o => o)
+            //                                 .OfType<IAIFunctionsSource>();
+            //IList<AITool> toolList = functionSources.SelectMany(o => o.GetAIFunctions()).ToList();
+            //_agent = chatClient.CreateAIAgent(tools: toolList);
+
         }
         public async Task RunAsync(string prompt)
         {
