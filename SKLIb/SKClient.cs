@@ -12,7 +12,7 @@ namespace SKLIb
         event EventHandler<SKClient.ResponseEventArgs>? ResponseReceived;
         event EventHandler<FunctionCallEventArgs>? FunctionCalled;
 
-        Task RunAsync(string prompt);
+        Task<string> RunAsync(string prompt);
     }
 
     public class SKClient : ISKClient
@@ -65,7 +65,7 @@ namespace SKLIb
             }
             _chatService = _kernel.GetRequiredService<IChatCompletionService>();
         }
-        public async Task RunAsync(string prompt)
+        public async Task<string> RunAsync(string prompt)
         {
             _chatHistory.AddUserMessage(prompt);
             bool success = false;
@@ -116,6 +116,8 @@ namespace SKLIb
             _chatHistory.AddAssistantMessage(fullMessage);
 
             ResponseReceived?.Invoke(this, new ResponseEventArgs { Response = fullMessage, SqlQueries=ExtractSql(fullMessage) });
+
+            return fullMessage;
         }
 
         static string[] ExtractSql(string response)

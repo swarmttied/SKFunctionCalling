@@ -5,6 +5,7 @@ using static RoleService;
 using static Console;
 using Microsoft.Extensions.Configuration;
 using SKLIb;
+using InquiryLib;
 
 public class SKFunctionCallingProgram
 {
@@ -39,17 +40,24 @@ Endpoint: {endpoint}
 ------------------------------------------------------------------------------------------
     ");
 
-        var instructions = @"You are the Role Membership Agent. You assist with user user access needs.
+//        var instructions = @"You are the Role Membership Agent. You assist with user user access needs.
+//You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
+
+//If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
+//";
+
+        var instructions = @"You are the Agreement Inquiry Agent. You assist with user questions about agreements with your clients.
 You will introduce yourself before executing the first command. If there is commands you cannot comply, let the user know.
 
 If no function in this application is called, tell the user the request is beyond the scope of your responsibilities.
 ";
 
         string prompt = "Hello. What is your name?";
-        SKLIb.IFunctionCalled[] services = { new RoleService(),
-                              new UserService(),
-                              new UserRoleService(),
-                              new NotificationService() };
+        //SKLIb.IFunctionCalled[] services = { new RoleService(),
+        //                      new UserService(),
+        //                      new UserRoleService(),
+        //                      new NotificationService() };
+        SKLIb.IFunctionCalled[] services = { new AgreementService() };
         var functionCaller = new SKClient(endpoint, deployment, instructions, services);
         functionCaller.ResponseReceived += FunctionCaller_ResponseReceived;
         functionCaller.RateExceeded += FunctionCaller_RateExceeded;
