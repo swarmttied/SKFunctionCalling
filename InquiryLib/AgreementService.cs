@@ -15,6 +15,10 @@ namespace InquiryLib
         [KernelFunction]
         public Agreement GetAgreementByEnrollmentId(string enrollmentId)
         {
+            // Optiontally raise an event when the function is called
+            FunctionCalled?.Invoke(this, new FunctionCallEventArgs($"""{nameof(GetAgreementByEnrollmentId)}(enrollmentId="{enrollmentId}" """));
+            
+
             return new Agreement
             {
                 EnrollmentId = enrollmentId,
@@ -28,6 +32,9 @@ namespace InquiryLib
         [KernelFunction]
         public Agreement[] GetAgreementsByClientName(string clientName)
         {
+            // Optiontally raise an event when the function is called
+            FunctionCallEventArgs args = new FunctionCallEventArgs($"""{nameof(GetAgreementsByClientName)}(clientName="{clientName}" """);
+
             return new Agreement[]
             {
                 new Agreement

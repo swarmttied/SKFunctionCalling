@@ -18,10 +18,10 @@ public class SKFunctionCallingProgram
         string endpoint = configuration["endpoint"];
         string deployment = configuration["deployment"];
 
-#if RESET
-        ResetDb();
-        Console.WriteLine("DB is reset.");
-#endif
+//#if RESET
+//        ResetDb();
+//        Console.WriteLine("DB is reset.");
+//#endif
 
         ForegroundColor = ConsoleColor.White;
 
