@@ -6,6 +6,8 @@ using static Console;
 using Microsoft.Extensions.Configuration;
 using SKLIb;
 using InquiryLib;
+using System;
+using System.Drawing;
 
 public class SKFunctionCallingProgram
 {
@@ -61,6 +63,10 @@ If no function in this application is called, tell the user the request is beyon
         var functionCaller = new SKClient(endpoint, deployment, instructions, services);
         functionCaller.ResponseReceived += FunctionCaller_ResponseReceived;
         functionCaller.RateExceeded += FunctionCaller_RateExceeded;
+        foreach (var service in services)
+        {
+            service.FunctionCalled += FunctionCaller_FunctionCalled;
+        }
         while (true)
         {
             ForegroundColor = ConsoleColor.DarkYellow;
@@ -77,6 +83,12 @@ If no function in this application is called, tell the user the request is beyon
             if (prompt.Trim().ToLower() == "exit")
                 break;
         }
+    }
+
+    private static void FunctionCaller_FunctionCalled(object? sender, FunctionCallEventArgs e)
+    {
+        ForegroundColor = ConsoleColor.DarkYellow;
+        WriteLine($"Function called: {e.FunctionName})");
     }
 
     private static void FunctionCaller_RateExceeded(object? sender, SKClient.RateExceededEventArgs e)
